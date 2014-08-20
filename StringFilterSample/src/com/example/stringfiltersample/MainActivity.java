@@ -5,6 +5,11 @@ import android.os.Bundle;
 import android.text.InputFilter;
 import android.widget.EditText;
 
+/**
+ * @description : Sample project shows the use of StringFilter class
+ * @author hyogij@gmail.com
+ * 
+ */
 public class MainActivity extends Activity {
 
 	@Override

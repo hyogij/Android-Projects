@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 /**
  * @description : Inputfilter class to constrain the EditText changes
- * @author hyogij@kftc.or.kr
+ * @author hyogij@gmail.com
  * 
  */
 public class StringFilter {
@@ -93,7 +93,7 @@ public class StringFilter {
 	}
 
 	// Shows toast with specify delay that is shorter than Toast.LENGTH_SHORT
-	public void showToast(String msg) {
+	private void showToast(String msg) {
 		final Toast toast = Toast.makeText(context.getApplicationContext(),
 				msg, Toast.LENGTH_SHORT);
 		toast.show();
