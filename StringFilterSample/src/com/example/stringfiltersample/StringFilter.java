@@ -21,8 +21,8 @@ public class StringFilter {
 
 	private static final int ALLOW_ALPHANUMERIC = 0;
 	private static final int ALLOW_ALPHANUMERIC_HANGUL = 1;
-
 	private static final int TOAST_LELNGTH = 400;
+
 	private Context context = null;
 
 	public StringFilter(Context context) {
