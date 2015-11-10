@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">StringFilterSample</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="input_test_alphanumeric">영문자, 숫자 입력 테스트 </string>
+    <string name="input_test_alphanumeric_hangul">영문자, 숫자, 한글  입력 테스트 </string>
+    <string name="pattern_alphanumeric">^[a-zA-Z0-9]+$</string>
+    <string name="pattern_alphanumeric_hangul">^[a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ\u318D\u119E\u11A2\u2022\u2025a\u00B7\uFE55]+$</string>
+    <string name="input_error_alphanum">영문자와 숫자만 허용합니다.</string>
+    <string name="input_error_alphanumeric_hangul">영문자와 숫자, 한글만 허용합니다.</string>
+
+</resources>
