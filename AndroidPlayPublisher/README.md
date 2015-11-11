@@ -1,6 +1,6 @@
 # Google Play Developer API samples
 
-A collection of Java samples for the Play Developer API.
+A collection of Java samples for the Play Developer API. 
 
 ## Installation
 
