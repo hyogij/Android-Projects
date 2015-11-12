@@ -7,29 +7,29 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity">
+    tools:context="com.hyogij.androidassignmentnew.ImageViewerActivity">
 
-    <Button
-        android:id="@+id/btnRequestJson"
+    <ImageView
+        android:id="@+id/imageView"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:onClick="onRequestJson"
-        android:text="Request JSON Data" />
-
-    <Button
-        android:id="@+id/btnReadDatabase"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/btnRequestJson"
-        android:onClick="onReadDatabase"
-        android:text="Read Database" />
+        android:layout_alignParentTop="true" />
 
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnReadDatabase"
-        android:onClick="onLoadImage"
-        android:text="Load Image" />
+        android:layout_above="@+id/btnClose"
+        android:onClick="onRefresh"
+        android:text="Refresh" />
+
+    <Button
+        android:id="@+id/btnClose"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:onClick="onClose"
+        android:text="Close" />
+
 </RelativeLayout>

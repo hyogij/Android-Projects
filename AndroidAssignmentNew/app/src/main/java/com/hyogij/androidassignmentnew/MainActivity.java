@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import java.util.ArrayList;
-
 /*
  * Example application to test json and and sqlite
  * Date : 2015.11.10
@@ -29,6 +27,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void onReadDatabase(View view) {
         Intent intent = new Intent(this, DatabaseResultActivity.class);
+        startActivity(intent);
+    }
+
+
+    public void onLoadImage(View view) {
+        Intent intent = new Intent(this, ImageViewerActivity.class);
         startActivity(intent);
     }
 }
