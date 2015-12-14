@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">jsonclient</string>
+    <string name="users_activity">Users</string>
+    <string name="albums_activity">Albums</string>
+    <string name="pictures_activity">Pictures</string>
+    <string name="picture_view_activity">Picture</string>
+</resources>
