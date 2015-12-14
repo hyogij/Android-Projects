@@ -13,9 +13,9 @@ import com.example.efficientappexample.transfer.BundleMapper;
 import com.example.efficientappexample.view.DeclareView;
 import com.example.efficientappexample.view.ViewMapper;
 
-// °£°áÇÏ°í È¿À²ÀûÀÎ ¾Èµå·ÎÀÌµå ¾Û ±¸Á¶
-// 1) Resource Id Mapping ÃÖÀûÈ­ : Annotation°ú Mapping À» ÀÌ¿ëÇÏ¿© OnClickListener ÃÖ¼ÒÈ­
-// 2) BundleMapper¸¦ ÀÌ¿ëÇÑ °£°áÈ­ : AnnotationÀ» ÀÌ¿ëÇÏ¿© Å° ¸ÊÇÎ ÃÖ¼ÒÈ­ 
+// ê°„ê²°í•˜ê³  íš¨ìœ¨ì ì¸ ì•ˆë“œë¡œì´ë“œ ì•± êµ¬ì¡°
+// 1) Resource Id Mapping ìµœì í™” : Annotationê³¼ Mapping ì„ ì´ìš©í•˜ì—¬ OnClickListener ìµœì†Œí™”
+// 2) BundleMapperë¥¼ ì´ìš©í•œ ê°„ê²°í™” : Annotationì„ ì´ìš©í•˜ì—¬ í‚¤ ë§µí•‘ ìµœì†Œí™” 
 public class MainActivity extends Activity implements View.OnClickListener {
 	private static final String CLASS_NAME = MainActivity.class
 			.getCanonicalName();
@@ -40,7 +40,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		// @DeclareView »ç¿ëÇÏ±â À§ÇÑ map ÇÔ¼ö È£Ãâ 
+		// @DeclareView ì‚¬ìš©í•˜ê¸° ìœ„í•œ map í•¨ìˆ˜ í˜¸ì¶œ 
 		ViewMapper.mapLayout(this, getWindow().getDecorView());
 
 		setUiContents();
@@ -68,8 +68,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
 		Log.d(CLASS_NAME, "year: " + year);
 		
 		Intent intent = new Intent(MainActivity.this, TestActivity.class);
-//		intent.putExtra("contents", contents);
-//		intent.putExtra("year", year);
 		BundleMapper.toBundle(this, intent.getExtras());
 		startActivity(intent);
 	}

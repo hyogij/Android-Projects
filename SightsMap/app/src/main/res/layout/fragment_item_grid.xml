@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.hyogij.berlinmap.ListItemFragment">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/txtName"
+                android:layout_width="0dp"
+                android:layout_weight="5" />
+
+            <TextView
+                android:id="@+id/txtLatitude"
+                android:layout_width="0dp"
+                android:layout_weight="2" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/txtDescription"
+                android:layout_width="0dp"
+                android:layout_weight="5" />
+
+            <TextView
+                android:id="@+id/txtLongitude"
+                android:layout_width="0dp"
+                android:layout_weight="2" />
+        </TableRow>
+    </TableLayout>
+
+</FrameLayout>

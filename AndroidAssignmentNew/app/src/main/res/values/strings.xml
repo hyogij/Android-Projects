@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">AndroidAssignmentNew</string>
+    <string name="title_activity_json_result">JsonResultActivity</string>
+    <string name="title_activity_image_loader">ImageLoader</string>
+</resources>
