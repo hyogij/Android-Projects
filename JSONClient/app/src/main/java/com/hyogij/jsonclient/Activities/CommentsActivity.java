@@ -18,6 +18,7 @@ import com.hyogij.jsonclient.Const.Constants;
 import com.hyogij.jsonclient.JsonDatas.Comment;
 import com.hyogij.jsonclient.JsonRequestUtils.JsonRequestHelper;
 import com.hyogij.jsonclient.R;
+import com.hyogij.jsonclient.StringUtils.Utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -48,7 +49,9 @@ public class CommentsActivity extends Activity {
         url = new StringBuilder(Constants.COMMENT_REQUEST_URL);
         url.append(postId);
 
-        setActvityTitle(postId);
+        // Change an activity name
+        setTitle(Utils.getActvityTitle(getString(R.string.comments_activity), Constants
+                .TAG_POSTID, postId));
 
         // Search text in the listview
         editSearch = (EditText) findViewById(R.id.search);
@@ -56,17 +59,6 @@ public class CommentsActivity extends Activity {
 
         listView = (ListView) findViewById(R.id.list);
         requestJSON();
-    }
-
-    // Change an activity name
-    private void setActvityTitle(String postId) {
-        StringBuilder title = new StringBuilder(getString(R.string.comments_activity));
-        title.append(" : ");
-        title.append(Constants.TAG_POSTID);
-        title.append("(");
-        title.append(postId);
-        title.append(")");
-        setTitle(title.toString());
     }
 
     private void addSearchFilter() {

@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import com.hyogij.jsonclient.Const.Constants;
 import com.hyogij.jsonclient.ImageLoaderUtils.ImageLoader;
 import com.hyogij.jsonclient.R;
+import com.hyogij.jsonclient.StringUtils.Utils;
 
 /**
  * Created by hyogij on 2015. 12. 13..
@@ -29,7 +30,9 @@ public class PictureViewActivity extends Activity {
         url = intent.getStringExtra(Constants.TAG_URL);
 
         String id = intent.getStringExtra(Constants.TAG_ID);
-        setActvityTitle(id);
+        // Change an activity name
+        setTitle(Utils.getActvityTitle(getString(R.string.picture_view_activity), Constants
+                .TAG_ID, id));
 
         imageLoader = new ImageLoader(getApplicationContext());
         new ProcessFacebookTask().execute(null, null, null);

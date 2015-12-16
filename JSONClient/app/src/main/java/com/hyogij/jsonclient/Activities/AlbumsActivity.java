@@ -20,6 +20,7 @@ import com.hyogij.jsonclient.Const.Constants;
 import com.hyogij.jsonclient.JsonDatas.Album;
 import com.hyogij.jsonclient.JsonRequestUtils.JsonRequestHelper;
 import com.hyogij.jsonclient.R;
+import com.hyogij.jsonclient.StringUtils.Utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,7 +51,9 @@ public class AlbumsActivity extends Activity {
         url = new StringBuilder(Constants.ALBUM_REQUEST_URL);
         url.append(userId);
 
-        setActvityTitle(userId);
+        // Change an activity name
+        setTitle(Utils.getActvityTitle(getString(R.string.albums_activity), Constants
+                .TAG_USERID, userId));
 
         // Search text in the listview
         editSearch = (EditText) findViewById(R.id.search);
@@ -58,17 +61,6 @@ public class AlbumsActivity extends Activity {
 
         listView = (ListView) findViewById(R.id.list);
         requestJSON();
-    }
-
-    // Change an activity name
-    private void setActvityTitle(String userId) {
-        StringBuilder title = new StringBuilder(getString(R.string.albums_activity));
-        title.append(" : ");
-        title.append(Constants.TAG_USERID);
-        title.append("(");
-        title.append(userId);
-        title.append(")");
-        setTitle(title.toString());
     }
 
     private void addSearchFilter() {
