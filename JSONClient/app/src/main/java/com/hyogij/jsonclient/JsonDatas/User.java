@@ -57,7 +57,7 @@ public class User {
 
             @Override
             public String toString() {
-                return lat + '\'' + lng;
+                return lat + ' ' + lng;
             }
         }
 
@@ -95,10 +95,10 @@ public class User {
 
         @Override
         public String toString() {
-            return street + '\'' +
-                    suite + '\'' +
-                    city + '\'' +
-                    zipcode + '\'' +
+            return street + ' ' +
+                    suite + ' ' +
+                    city + ' ' +
+                    zipcode + ' ' +
                     geo.toString();
         }
     }
@@ -148,8 +148,7 @@ public class User {
         @Override
         public String toString() {
             return name + '\'' +
-                    catchPhrase + '\'' +
-                    bs;
+                    catchPhrase + ' ' + bs;
         }
     }
 
@@ -204,10 +203,10 @@ public class User {
     @Override
     public String toString() {
         // Ignore other fields
-        return  name + '\'' + username + '\'' + email + '\'' +
+        return name + ' ' + username + ' ' + email + ' ' +
                 address.toString() +
-                phone + '\'' +
-                website + '\'' +
+                phone + ' ' +
+                website + ' ' +
                 company.toString();
     }
 }

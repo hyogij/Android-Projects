@@ -1,4 +1,4 @@
-package com.hyogij.jsonclient;
+package com.hyogij.jsonclient.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -15,32 +15,42 @@ import android.widget.ListView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.hyogij.jsonclient.Adapters.UserAdapter;
+import com.hyogij.jsonclient.Adapters.AlbumAdapter;
 import com.hyogij.jsonclient.Const.Constants;
-import com.hyogij.jsonclient.JsonDatas.User;
+import com.hyogij.jsonclient.JsonDatas.Album;
 import com.hyogij.jsonclient.JsonRequestUtils.JsonRequestHelper;
+import com.hyogij.jsonclient.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
 
-public class UsersActivity extends Activity {
-    private static final String CLASS_NAME = UsersActivity.class
+public class AlbumsActivity extends Activity {
+    private static final String CLASS_NAME = AlbumsActivity.class
             .getCanonicalName();
 
     private JsonRequestHelper jsonRequestHelper = null;
 
-    private ArrayAdapter<User> arrayAdapter = null;
-    private ArrayList<User> userArrayList = null;
-    private UserAdapter userAdapter = null;
+    private ArrayAdapter<Album> arrayAdapter = null;
+    private ArrayList<Album> albumArrayList = null;
+    private AlbumAdapter albumAdapter = null;
 
     private ListView listView = null;
     private EditText editSearch = null;
 
+    private StringBuilder url = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.users_activity);
+        setContentView(R.layout.albums_activity);
+
+        Intent intent = getIntent();
+        String userId = intent.getStringExtra(Constants.TAG_USERID);
+        url = new StringBuilder(Constants.ALBUM_REQUEST_URL);
+        url.append(userId);
+
+        setActvityTitle(userId);
 
         // Search text in the listview
         editSearch = (EditText) findViewById(R.id.search);
@@ -50,13 +60,24 @@ public class UsersActivity extends Activity {
         requestJSON();
     }
 
+    // Change an activity name
+    private void setActvityTitle(String userId) {
+        StringBuilder title = new StringBuilder(getString(R.string.albums_activity));
+        title.append(" : ");
+        title.append(Constants.TAG_USERID);
+        title.append("(");
+        title.append(userId);
+        title.append(")");
+        setTitle(title.toString());
+    }
+
     private void addSearchFilter() {
         // Capture Text in EditText
         editSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable arg0) {
                 String text = editSearch.getText().toString().toLowerCase(Locale.getDefault());
-                userAdapter.filter(text);
+                albumAdapter.filter(text);
             }
 
             @Override
@@ -72,7 +93,7 @@ public class UsersActivity extends Activity {
     }
 
     private void requestJSON() {
-        jsonRequestHelper = new JsonRequestHelper(this, handler, Constants.USER_REQUEST_URL);
+        jsonRequestHelper = new JsonRequestHelper(this, handler, url.toString());
     }
 
     // Handler to wait receiving json data
@@ -83,8 +104,8 @@ public class UsersActivity extends Activity {
                 case 0:
                     GsonBuilder gsonBuilder = new GsonBuilder();
                     Gson gson = gsonBuilder.create();
-                    User[] userArray = gson.fromJson(jsonRequestHelper.getJsonData(), User[].class);
-                    userArrayList = new ArrayList<User>(Arrays.asList(userArray));
+                    Album[] userArray = gson.fromJson(jsonRequestHelper.getJsonData(), Album[].class);
+                    albumArrayList = new ArrayList<Album>(Arrays.asList(userArray));
                     onRefreshList();
                     break;
                 default:
@@ -94,18 +115,18 @@ public class UsersActivity extends Activity {
     };
 
     private void onRefreshList() {
-        userAdapter = new UserAdapter(this, R.layout.user_item, userArrayList);
-        listView.setAdapter(userAdapter);
+        albumAdapter = new AlbumAdapter(this, R.layout.album_item, albumArrayList);
+        listView.setAdapter(albumAdapter);
         listView.setOnItemClickListener(onClickListItem);
     }
 
     private AdapterView.OnItemClickListener onClickListItem = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-            String userId = userArrayList.get(arg2).getId();
-            Intent albumIntent = new Intent(UsersActivity
-                    .this, AlbumsActivity.class);
-            albumIntent.putExtra(Constants.TAG_USERID, userId);
+            String albumId = albumArrayList.get(arg2).getId();
+            Intent albumIntent = new Intent(AlbumsActivity
+                    .this, PicturesActivity.class);
+            albumIntent.putExtra(Constants.TAG_ALBUMID, albumId);
             startActivity(albumIntent);
         }
     };

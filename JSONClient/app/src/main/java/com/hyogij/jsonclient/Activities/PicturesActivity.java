@@ -1,4 +1,4 @@
-package com.hyogij.jsonclient;
+package com.hyogij.jsonclient.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -19,6 +19,7 @@ import com.hyogij.jsonclient.Adapters.PictureAdapter;
 import com.hyogij.jsonclient.Const.Constants;
 import com.hyogij.jsonclient.JsonDatas.Picture;
 import com.hyogij.jsonclient.JsonRequestUtils.JsonRequestHelper;
+import com.hyogij.jsonclient.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -52,12 +53,25 @@ public class PicturesActivity extends Activity {
         url = new StringBuilder(Constants.PICTURE_REQUEST_URL);
         url.append(albumId);
 
+        setActvityTitle(albumId);
+
         // Search text in the listview
         editSearch = (EditText) findViewById(R.id.search);
         addSearchFilter();
 
         listView = (ListView) findViewById(R.id.list);
         requestJSON();
+    }
+
+    // Change an activity name
+    private void setActvityTitle(String albumId) {
+        StringBuilder title = new StringBuilder(getString(R.string.pictures_activity));
+        title.append(" : ");
+        title.append(Constants.TAG_ALBUMID);
+        title.append("(");
+        title.append(albumId);
+        title.append(")");
+        setTitle(title.toString());
     }
 
     private void addSearchFilter() {
@@ -115,9 +129,11 @@ public class PicturesActivity extends Activity {
         @Override
         public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
             String url = pictureArrayList.get(arg2).getUrl();
+            String id = pictureArrayList.get(arg2).getId();
             Intent pictureViewIntent = new Intent(PicturesActivity
                     .this, PictureViewActivity.class);
             pictureViewIntent.putExtra(Constants.TAG_URL, url);
+            pictureViewIntent.putExtra(Constants.TAG_ID, id);
             startActivity(pictureViewIntent);
         }
     };

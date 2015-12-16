@@ -1,9 +1,11 @@
 <resources>
-    <string name="app_name">jsonclient</string>
-    <string name="users_activity">Users</string>
-    <string name="albums_activity">Albums</string>
-    <string name="pictures_activity">Pictures</string>
+    <string name="app_name">JSON Client</string>
+    <string name="users_activity">Users List</string>
+    <string name="albums_activity">Albums List</string>
+    <string name="pictures_activity">Pictures List</string>
     <string name="picture_view_activity">Picture</string>
+    <string name="posts_activity">Posts List</string>
+    <string name="comments_activity">Comments List</string>
 
     <string name="id">id : </string>
     <string name="name">name : </string>
@@ -16,4 +18,9 @@
     <string name="userId">userId : </string>
     <string name="title">title : </string>
     <string name="albumId">albumId : </string>
+    <string name="body">body : </string>
+    <string name="postId">postId : </string>
+
+    <string name="album">Album</string>
+    <string name="post">Post</string>
 </resources>

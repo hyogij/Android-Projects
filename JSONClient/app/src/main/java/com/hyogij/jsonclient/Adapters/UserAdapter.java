@@ -1,14 +1,18 @@
 package com.hyogij.jsonclient.Adapters;
 
 import android.content.Context;
-import android.util.Log;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.hyogij.jsonclient.Activities.AlbumsActivity;
+import com.hyogij.jsonclient.Const.Constants;
 import com.hyogij.jsonclient.JsonDatas.User;
+import com.hyogij.jsonclient.Activities.PostsActivity;
 import com.hyogij.jsonclient.R;
 
 import java.util.ArrayList;
@@ -34,14 +38,13 @@ public class UserAdapter extends ArrayAdapter<User> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         View v = convertView;
         if (v == null) {
             LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = vi.inflate(R.layout.user_item, null);
         }
-        Log.d(CLASS_NAME, "getView " + items.size() + " / " + position);
-        User user = items.get(position);
+        final User user = items.get(position);
         if (user != null) {
             TextView id = (TextView) v.findViewById(R.id.id);
             TextView name = (TextView) v.findViewById(R.id.name);
@@ -60,6 +63,22 @@ public class UserAdapter extends ArrayAdapter<User> {
             phone.setText(context.getString(R.string.phone) + user.getPhone());
             website.setText(context.getString(R.string.website) + user.getWebsite());
             company.setText(context.getString(R.string.company) + user.getCompany().toString());
+
+            Button btnAlbum = (Button) v.findViewById(R.id.btnAlbum);
+            btnAlbum.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(user.getId(), true);
+                }
+            });
+
+            Button btnPost = (Button) v.findViewById(R.id.btnPost);
+            btnPost.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(user.getId(), false);
+                }
+            });
         }
         return v;
     }
@@ -77,7 +96,17 @@ public class UserAdapter extends ArrayAdapter<User> {
                 }
             }
         }
-        Log.d(CLASS_NAME, "filter " + items.size());
         notifyDataSetChanged();
+    }
+
+    private void startActivity(String userId, boolean isAlbumsActivity) {
+        Intent intent = null;
+        if (isAlbumsActivity == true) {
+            intent = new Intent(context, AlbumsActivity.class);
+        } else {
+            intent = new Intent(context, PostsActivity.class);
+        }
+        intent.putExtra(Constants.TAG_USERID, userId);
+        context.startActivity(intent);
     }
 }

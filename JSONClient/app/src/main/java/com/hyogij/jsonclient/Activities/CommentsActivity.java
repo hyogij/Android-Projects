@@ -1,4 +1,4 @@
-package com.hyogij.jsonclient;
+package com.hyogij.jsonclient.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,32 +7,31 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.hyogij.jsonclient.Adapters.AlbumAdapter;
+import com.hyogij.jsonclient.Adapters.CommentAdapter;
 import com.hyogij.jsonclient.Const.Constants;
-import com.hyogij.jsonclient.JsonDatas.Album;
+import com.hyogij.jsonclient.JsonDatas.Comment;
 import com.hyogij.jsonclient.JsonRequestUtils.JsonRequestHelper;
+import com.hyogij.jsonclient.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
 
-public class AlbumsActivity extends Activity {
-    private static final String CLASS_NAME = AlbumsActivity.class
+public class CommentsActivity extends Activity {
+    private static final String CLASS_NAME = CommentsActivity.class
             .getCanonicalName();
 
     private JsonRequestHelper jsonRequestHelper = null;
 
-    private ArrayAdapter<Album> arrayAdapter = null;
-    private ArrayList<Album> albumArrayList = null;
-    private AlbumAdapter albumAdapter = null;
+    private ArrayAdapter<Comment> arrayAdapter = null;
+    private ArrayList<Comment> commentArrayList = null;
+    private CommentAdapter commentAdapter = null;
 
     private ListView listView = null;
     private EditText editSearch = null;
@@ -42,12 +41,14 @@ public class AlbumsActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.albums_activity);
+        setContentView(R.layout.posts_activity);
 
         Intent intent = getIntent();
-        String userId = intent.getStringExtra(Constants.TAG_USERID);
-        url = new StringBuilder(Constants.ALBUM_REQUEST_URL);
-        url.append(userId);
+        String postId = intent.getStringExtra(Constants.TAG_POSTID);
+        url = new StringBuilder(Constants.COMMENT_REQUEST_URL);
+        url.append(postId);
+
+        setActvityTitle(postId);
 
         // Search text in the listview
         editSearch = (EditText) findViewById(R.id.search);
@@ -57,13 +58,24 @@ public class AlbumsActivity extends Activity {
         requestJSON();
     }
 
+    // Change an activity name
+    private void setActvityTitle(String postId) {
+        StringBuilder title = new StringBuilder(getString(R.string.comments_activity));
+        title.append(" : ");
+        title.append(Constants.TAG_POSTID);
+        title.append("(");
+        title.append(postId);
+        title.append(")");
+        setTitle(title.toString());
+    }
+
     private void addSearchFilter() {
         // Capture Text in EditText
         editSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable arg0) {
                 String text = editSearch.getText().toString().toLowerCase(Locale.getDefault());
-                albumAdapter.filter(text);
+                commentAdapter.filter(text);
             }
 
             @Override
@@ -90,8 +102,9 @@ public class AlbumsActivity extends Activity {
                 case 0:
                     GsonBuilder gsonBuilder = new GsonBuilder();
                     Gson gson = gsonBuilder.create();
-                    Album[] userArray = gson.fromJson(jsonRequestHelper.getJsonData(), Album[].class);
-                    albumArrayList = new ArrayList<Album>(Arrays.asList(userArray));
+                    Comment[] commentArray = gson.fromJson(jsonRequestHelper.getJsonData(), Comment[]
+                            .class);
+                    commentArrayList = new ArrayList<Comment>(Arrays.asList(commentArray));
                     onRefreshList();
                     break;
                 default:
@@ -101,19 +114,7 @@ public class AlbumsActivity extends Activity {
     };
 
     private void onRefreshList() {
-        albumAdapter = new AlbumAdapter(this, R.layout.album_item, albumArrayList);
-        listView.setAdapter(albumAdapter);
-        listView.setOnItemClickListener(onClickListItem);
+        commentAdapter = new CommentAdapter(this, R.layout.album_item, commentArrayList);
+        listView.setAdapter(commentAdapter);
     }
-
-    private AdapterView.OnItemClickListener onClickListItem = new AdapterView.OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-            String albumId = albumArrayList.get(arg2).getId();
-            Intent albumIntent = new Intent(AlbumsActivity
-                    .this, PicturesActivity.class);
-            albumIntent.putExtra(Constants.TAG_ALBUMID, albumId);
-            startActivity(albumIntent);
-        }
-    };
 }

@@ -12,8 +12,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true">
         <activity
-            android:name=".UsersActivity"
-            android:label="@string/users_activity"
+            android:name=".Activities.UsersActivity"
+            android:label="@string/app_name"
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -22,17 +22,24 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AlbumsActivity"
+            android:name=".Activities.AlbumsActivity"
             android:label="@string/albums_activity"
             android:windowSoftInputMode="stateHidden"/>
         <activity
-            android:name=".PicturesActivity"
+            android:name=".Activities.PicturesActivity"
             android:label="@string/pictures_activity"
             android:windowSoftInputMode="stateHidden"/>
         <activity
-            android:name=".PictureViewActivity"
+            android:name=".Activities.PictureViewActivity"
             android:label="@string/picture_view_activity"/>
-
+        <activity
+            android:name=".Activities.PostsActivity"
+            android:label="@string/posts_activity"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity
+            android:name=".Activities.CommentsActivity"
+            android:label="@string/comments_activity"
+            android:windowSoftInputMode="stateHidden"/>
     </application>
 
 </manifest>
