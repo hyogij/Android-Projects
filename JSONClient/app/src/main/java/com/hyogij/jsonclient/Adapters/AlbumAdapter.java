@@ -32,23 +32,27 @@ public class AlbumAdapter extends ArrayAdapter<Album> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View v = convertView;
-        if (v == null) {
+        AlbumViewHolder viewHolder = null;
+        if (convertView == null) {
             LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            v = vi.inflate(R.layout.album_item, null);
+            convertView = vi.inflate(R.layout.album_item, null);
+
+            viewHolder = new AlbumViewHolder();
+            viewHolder.userId = (TextView) convertView.findViewById(R.id.userId);
+            viewHolder.id = (TextView) convertView.findViewById(R.id.id);
+            viewHolder.title = (TextView) convertView.findViewById(R.id.title);
+
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (AlbumViewHolder) convertView.getTag();
         }
+
         Album album = items.get(position);
+        viewHolder.userId.setText(context.getString(R.string.userId) + album.getUserId());
+        viewHolder.id.setText(context.getString(R.string.id) + album.getId());
+        viewHolder.title.setText(context.getString(R.string.title) + album.getTitle());
 
-        if (album != null) {
-            TextView userId = (TextView) v.findViewById(R.id.userId);
-            TextView id = (TextView) v.findViewById(R.id.id);
-            TextView title = (TextView) v.findViewById(R.id.title);
-
-            userId.setText(context.getString(R.string.userId) + album.getUserId());
-            id.setText(context.getString(R.string.id) + album.getId());
-            title.setText(context.getString(R.string.title) + album.getTitle());
-        }
-        return v;
+        return convertView;
     }
 
     // Filter Class
@@ -65,5 +69,11 @@ public class AlbumAdapter extends ArrayAdapter<Album> {
             }
         }
         notifyDataSetChanged();
+    }
+
+    public class AlbumViewHolder {
+        public TextView userId;
+        public TextView id;
+        public TextView title;
     }
 }

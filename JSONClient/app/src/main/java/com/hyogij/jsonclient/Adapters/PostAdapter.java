@@ -32,24 +32,29 @@ public class PostAdapter extends ArrayAdapter<Post> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View v = convertView;
-        if (v == null) {
+        PostViewHolder viewHolder = null;
+        if (convertView == null) {
             LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            v = vi.inflate(R.layout.post_item, null);
-        }
-        Post post = items.get(position);
-        if (post != null) {
-            TextView userId = (TextView) v.findViewById(R.id.userId);
-            TextView id = (TextView) v.findViewById(R.id.id);
-            TextView title = (TextView) v.findViewById(R.id.title);
-            TextView body = (TextView) v.findViewById(R.id.body);
+            convertView = vi.inflate(R.layout.post_item, null);
 
-            userId.setText(context.getString(R.string.userId) + post.getUserId());
-            id.setText(context.getString(R.string.id) + post.getId());
-            title.setText(context.getString(R.string.title) + post.getTitle());
-            title.setText(context.getString(R.string.body) + post.getBody());
+            viewHolder = new PostViewHolder();
+            viewHolder.userId = (TextView) convertView.findViewById(R.id.userId);
+            viewHolder.id = (TextView) convertView.findViewById(R.id.id);
+            viewHolder.title = (TextView) convertView.findViewById(R.id.title);
+            viewHolder.body = (TextView) convertView.findViewById(R.id.body);
+
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (PostViewHolder) convertView.getTag();
         }
-        return v;
+
+        Post post = items.get(position);
+        viewHolder.userId.setText(context.getString(R.string.userId) + post.getUserId());
+        viewHolder.id.setText(context.getString(R.string.id) + post.getId());
+        viewHolder.title.setText(context.getString(R.string.title) + post.getTitle());
+        viewHolder.body.setText(context.getString(R.string.body) + post.getBody());
+
+        return convertView;
     }
 
     // Filter Class
@@ -66,5 +71,12 @@ public class PostAdapter extends ArrayAdapter<Post> {
             }
         }
         notifyDataSetChanged();
+    }
+
+    public class PostViewHolder {
+        public TextView userId;
+        public TextView id;
+        public TextView title;
+        public TextView body;
     }
 }

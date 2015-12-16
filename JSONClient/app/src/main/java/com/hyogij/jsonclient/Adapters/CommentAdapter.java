@@ -32,26 +32,31 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View v = convertView;
-        if (v == null) {
+        CommentViewHolder viewHolder = null;
+        if (convertView == null) {
             LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            v = vi.inflate(R.layout.comment_item, null);
-        }
-        Comment comment = items.get(position);
-        if (comment != null) {
-            TextView postId = (TextView) v.findViewById(R.id.postId);
-            TextView id = (TextView) v.findViewById(R.id.id);
-            TextView name = (TextView) v.findViewById(R.id.name);
-            TextView email = (TextView) v.findViewById(R.id.email);
-            TextView body = (TextView) v.findViewById(R.id.body);
+            convertView = vi.inflate(R.layout.comment_item, null);
 
-            postId.setText(context.getString(R.string.postId) + comment.getPostId());
-            id.setText(context.getString(R.string.id) + comment.getId());
-            name.setText(context.getString(R.string.name) + comment.getName());
-            email.setText(context.getString(R.string.email) + comment.getEmail());
-            body.setText(context.getString(R.string.email) + comment.getBody());
+            viewHolder = new CommentViewHolder();
+            viewHolder.postId = (TextView) convertView.findViewById(R.id.postId);
+            viewHolder.id = (TextView) convertView.findViewById(R.id.id);
+            viewHolder.name = (TextView) convertView.findViewById(R.id.name);
+            viewHolder.email = (TextView) convertView.findViewById(R.id.email);
+            viewHolder.body = (TextView) convertView.findViewById(R.id.body);
+
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (CommentViewHolder) convertView.getTag();
         }
-        return v;
+
+        Comment comment = items.get(position);
+        viewHolder.postId.setText(context.getString(R.string.postId) + comment.getPostId());
+        viewHolder.id.setText(context.getString(R.string.id) + comment.getId());
+        viewHolder.name.setText(context.getString(R.string.name) + comment.getName());
+        viewHolder.email.setText(context.getString(R.string.email) + comment.getEmail());
+        viewHolder.body.setText(context.getString(R.string.email) + comment.getBody());
+
+        return convertView;
     }
 
     // Filter Class
@@ -68,5 +73,13 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
             }
         }
         notifyDataSetChanged();
+    }
+
+    public class CommentViewHolder {
+        public TextView postId;
+        public TextView id;
+        public TextView name;
+        public TextView email;
+        public TextView body;
     }
 }

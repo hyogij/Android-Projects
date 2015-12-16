@@ -39,48 +39,53 @@ public class UserAdapter extends ArrayAdapter<User> {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        View v = convertView;
-        if (v == null) {
+        UserViewHolder viewHolder = null;
+        if (convertView == null) {
             LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            v = vi.inflate(R.layout.user_item, null);
+            convertView = vi.inflate(R.layout.user_item, null);
+
+            viewHolder = new UserViewHolder();
+            viewHolder.id = (TextView) convertView.findViewById(R.id.id);
+            viewHolder.name = (TextView) convertView.findViewById(R.id.name);
+            viewHolder.username = (TextView) convertView.findViewById(R.id.username);
+            viewHolder.email = (TextView) convertView.findViewById(R.id.email);
+            viewHolder.address = (TextView) convertView.findViewById(R.id.address);
+            viewHolder.phone = (TextView) convertView.findViewById(R.id.phone);
+            viewHolder.website = (TextView) convertView.findViewById(R.id.website);
+            viewHolder.company = (TextView) convertView.findViewById(R.id.company);
+
+            viewHolder.btnAlbum = (Button) convertView.findViewById(R.id.btnAlbum);
+            viewHolder.btnPost = (Button) convertView.findViewById(R.id.btnPost);
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (UserViewHolder) convertView.getTag();
         }
+
         final User user = items.get(position);
-        if (user != null) {
-            TextView id = (TextView) v.findViewById(R.id.id);
-            TextView name = (TextView) v.findViewById(R.id.name);
-            TextView username = (TextView) v.findViewById(R.id.username);
-            TextView email = (TextView) v.findViewById(R.id.email);
-            TextView address = (TextView) v.findViewById(R.id.address);
-            TextView phone = (TextView) v.findViewById(R.id.phone);
-            TextView website = (TextView) v.findViewById(R.id.website);
-            TextView company = (TextView) v.findViewById(R.id.company);
 
-            id.setText(context.getString(R.string.id) + user.getId());
-            name.setText(context.getString(R.string.name) + user.getName());
-            username.setText(context.getString(R.string.username) + user.getUsername());
-            email.setText(context.getString(R.string.email) + user.getEmail());
-            address.setText(context.getString(R.string.address) + user.getAddress().toString());
-            phone.setText(context.getString(R.string.phone) + user.getPhone());
-            website.setText(context.getString(R.string.website) + user.getWebsite());
-            company.setText(context.getString(R.string.company) + user.getCompany().toString());
+        viewHolder.id.setText(context.getString(R.string.id) + user.getId());
+        viewHolder.name.setText(context.getString(R.string.name) + user.getName());
+        viewHolder.username.setText(context.getString(R.string.username) + user.getUsername());
+        viewHolder.email.setText(context.getString(R.string.email) + user.getEmail());
+        viewHolder.address.setText(context.getString(R.string.address) + user.getAddress().toString());
+        viewHolder.phone.setText(context.getString(R.string.phone) + user.getPhone());
+        viewHolder.website.setText(context.getString(R.string.website) + user.getWebsite());
+        viewHolder.company.setText(context.getString(R.string.company) + user.getCompany().toString());
 
-            Button btnAlbum = (Button) v.findViewById(R.id.btnAlbum);
-            btnAlbum.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(user.getId(), true);
-                }
-            });
+        viewHolder.btnAlbum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(user.getId(), true);
+            }
+        });
 
-            Button btnPost = (Button) v.findViewById(R.id.btnPost);
-            btnPost.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(user.getId(), false);
-                }
-            });
-        }
-        return v;
+        viewHolder.btnPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(user.getId(), false);
+            }
+        });
+        return convertView;
     }
 
     // Filter Class
@@ -108,5 +113,19 @@ public class UserAdapter extends ArrayAdapter<User> {
         }
         intent.putExtra(Constants.TAG_USERID, userId);
         context.startActivity(intent);
+    }
+
+    public class UserViewHolder {
+        public TextView id;
+        public TextView name;
+        public TextView username;
+        public TextView email;
+        public TextView address;
+        public TextView phone;
+        public TextView website;
+        public TextView company;
+
+        public Button btnAlbum;
+        public Button btnPost;
     }
 }

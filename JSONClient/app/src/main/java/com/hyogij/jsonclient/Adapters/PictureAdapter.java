@@ -1,7 +1,6 @@
 package com.hyogij.jsonclient.Adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,25 +35,29 @@ public class PictureAdapter extends ArrayAdapter<Picture> {
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
-        View v = convertView;
+        PictureViewHolder viewHolder = null;
         if (convertView == null) {
             LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            v = vi.inflate(R.layout.picture_item, null);
+            convertView = vi.inflate(R.layout.picture_item, null);
+
+            viewHolder = new PictureViewHolder();
+            viewHolder.albumId = (TextView) convertView.findViewById(R.id.albumId);
+            viewHolder.id = (TextView) convertView.findViewById(R.id.id);
+            viewHolder.title = (TextView) convertView.findViewById(R.id.title);
+            viewHolder.image = (ImageView) convertView.findViewById(R.id.image);
+
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (PictureViewHolder) convertView.getTag();
         }
 
         Picture picture = items.get(position);
-        if (picture != null) {
-            TextView albumId = (TextView) v.findViewById(R.id.albumId);
-            TextView id = (TextView) v.findViewById(R.id.id);
-            TextView title = (TextView) v.findViewById(R.id.title);
-            ImageView image = (ImageView) v.findViewById(R.id.image);
+        viewHolder.albumId.setText(context.getString(R.string.albumId) + picture.getAlbumId());
+        viewHolder.id.setText(context.getString(R.string.id) + picture.getId());
+        viewHolder.title.setText(context.getString(R.string.title) + picture.getTitle());
+        imageLoader.DisplayImage(picture.getThumbnailUrl(), viewHolder.image);
 
-            albumId.setText(context.getString(R.string.albumId) + picture.getAlbumId());
-            id.setText(context.getString(R.string.id) + picture.getId());
-            title.setText(context.getString(R.string.title) + picture.getTitle());
-            imageLoader.DisplayImage(picture.getThumbnailUrl(), image);
-        }
-        return v;
+        return convertView;
     }
 
     // Filter Class
@@ -71,5 +74,12 @@ public class PictureAdapter extends ArrayAdapter<Picture> {
             }
         }
         notifyDataSetChanged();
+    }
+
+    public class PictureViewHolder {
+        public TextView albumId;
+        public TextView id;
+        public TextView title;
+        public ImageView image;
     }
 }
