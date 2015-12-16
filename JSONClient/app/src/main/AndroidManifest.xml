@@ -14,6 +14,7 @@
         <activity
             android:name=".Activities.UsersActivity"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -21,24 +22,30 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
         <activity
             android:name=".Activities.AlbumsActivity"
             android:label="@string/albums_activity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
         <activity
             android:name=".Activities.PicturesActivity"
             android:label="@string/pictures_activity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
         <activity
             android:name=".Activities.PictureViewActivity"
-            android:label="@string/picture_view_activity"/>
+            android:label="@string/picture_view_activity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Activities.PostsActivity"
             android:label="@string/posts_activity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
         <activity
             android:name=".Activities.CommentsActivity"
             android:label="@string/comments_activity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
     </application>
 
