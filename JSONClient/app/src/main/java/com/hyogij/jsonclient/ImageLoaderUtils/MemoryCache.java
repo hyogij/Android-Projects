@@ -9,10 +9,11 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class MemoryCache {
-    private static final String TAG = "MemoryCache";
+    private static final String CLASS_NAME = MemoryCache.class.getCanonicalName();
+
     private Map<String, Bitmap> cache = Collections.synchronizedMap(
             new LinkedHashMap<String, Bitmap>(10, 1.5f, true));//Last
-            // argument true for LRU ordering
+    // argument true for LRU ordering
     private long size = 0;//current allocated size
     private long limit = 1000000;//max memory in bytes
 
@@ -23,7 +24,7 @@ public class MemoryCache {
 
     public void setLimit(long new_limit) {
         limit = new_limit;
-        Log.i(TAG, "MemoryCache will use up to " + limit / 1024. / 1024. +
+        Log.d(CLASS_NAME, "MemoryCache will use up to " + limit / 1024. / 1024. +
                 "MB");
     }
 
@@ -53,11 +54,11 @@ public class MemoryCache {
     }
 
     private void checkSize() {
-        Log.i(TAG, "cache size=" + size + " length=" + cache.size());
+        Log.d(CLASS_NAME, "cache size=" + size + " length=" + cache.size());
         if (size > limit) {
             Iterator<Map.Entry<String, Bitmap>> iter = cache.entrySet().iterator
                     ();//least recently accessed item will be the first one
-                    // iterated
+            // iterated
             while (iter.hasNext()) {
                 Map.Entry<String, Bitmap> entry = iter.next();
                 size -= getSizeInBytes(entry.getValue());
@@ -65,7 +66,7 @@ public class MemoryCache {
                 if (size <= limit)
                     break;
             }
-            Log.i(TAG, "Clean cache. New size " + cache.size());
+            Log.d(CLASS_NAME, "Clean cache. New size " + cache.size());
         }
     }
 

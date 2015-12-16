@@ -16,7 +16,7 @@ public class PictureViewActivity extends Activity {
             .getCanonicalName();
 
     public ImageLoader imageLoader;
-    private static final String TAG_URL = "url";
+    private static final String TAG_URL = "URL";
     private String url = null;
 
     @Override

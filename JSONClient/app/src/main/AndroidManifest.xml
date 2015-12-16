@@ -13,7 +13,8 @@
         android:supportsRtl="true">
         <activity
             android:name=".UsersActivity"
-            android:label="@string/users_activity">
+            android:label="@string/users_activity"
+            android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -22,10 +23,12 @@
         </activity>
         <activity
             android:name=".AlbumsActivity"
-            android:label="@string/albums_activity"/>
+            android:label="@string/albums_activity"
+            android:windowSoftInputMode="stateHidden"/>
         <activity
             android:name=".PicturesActivity"
-            android:label="@string/pictures_activity"/>
+            android:label="@string/pictures_activity"
+            android:windowSoftInputMode="stateHidden"/>
         <activity
             android:name=".PictureViewActivity"
             android:label="@string/picture_view_activity"/>

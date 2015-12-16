@@ -4,4 +4,16 @@
     <string name="albums_activity">Albums</string>
     <string name="pictures_activity">Pictures</string>
     <string name="picture_view_activity">Picture</string>
+
+    <string name="id">id : </string>
+    <string name="name">name : </string>
+    <string name="username">username : </string>
+    <string name="email">email : </string>
+    <string name="address">address : </string>
+    <string name="phone">phone : </string>
+    <string name="website">website : </string>
+    <string name="company">company : </string>
+    <string name="userId">userId : </string>
+    <string name="title">title : </string>
+    <string name="albumId">albumId : </string>
 </resources>

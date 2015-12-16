@@ -1,149 +1,112 @@
 package com.hyogij.jsonclient;
 
-import android.app.ListActivity;
-import android.app.ProgressDialog;
+import android.app.Activity;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.Handler;
+import android.os.Message;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
-import android.widget.ListAdapter;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 
-import com.hyogij.jsonclient.JSonRequestUtils.ServiceHandler;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.hyogij.jsonclient.Adapters.UserAdapter;
+import com.hyogij.jsonclient.Const.Constants;
+import com.hyogij.jsonclient.JsonDatas.User;
+import com.hyogij.jsonclient.JsonRequestUtils.JsonRequestHelper;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
+import java.util.Locale;
 
-public class UsersActivity extends ListActivity {
+public class UsersActivity extends Activity {
     private static final String CLASS_NAME = UsersActivity.class
             .getCanonicalName();
 
-    // URL to get users JSON
-    private static String url = "http://jsonplaceholder.typicode.com/users";
+    private JsonRequestHelper jsonRequestHelper = null;
 
-    // JSON Node names
-    private static final String TAG_ID = "id";
-    private static final String TAG_NAME = "name";
-    private static final String TAG_USERNAME = "username";
-    private static final String TAG_EMAIL = "email";
-    private static final String TAG_ADDRESS = "address";
-    private static final String TAG_PHONE = "phone";
-    private static final String TAG_WEBSITE = "website";
-    private static final String TAG_COMPANY = "company";
-    private static final String TAG_USERID = "userId";
+    private ArrayAdapter<User> arrayAdapter = null;
+    private ArrayList<User> userArrayList = null;
+    private UserAdapter userAdapter = null;
 
-    private ProgressDialog progressDialog = null;
-    private ArrayList<HashMap<String, String>> userList = null;
     private ListView listView = null;
+    private EditText editSearch = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.users_activity);
 
-        listView = getListView();
+        // Search text in the listview
+        editSearch = (EditText) findViewById(R.id.search);
+        addSearchFilter();
 
-        userList = new ArrayList<HashMap<String, String>>();
-        // Calling async task to get json
-        new GetUsers().execute();
+        listView = (ListView) findViewById(R.id.list);
+        requestJSON();
     }
 
-    // Async task class to get json by making HTTP call
-    private class GetUsers extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            // Showing progress dialog
-            progressDialog = new ProgressDialog(UsersActivity.this);
-            progressDialog.setMessage("Please wait...");
-            progressDialog.setCancelable(false);
-            progressDialog.show();
-        }
-
-        @Override
-        protected Void doInBackground(Void... arg0) {
-            // Creating service handler class instance
-            ServiceHandler sh = new ServiceHandler();
-            // Making a request to url and getting response
-            String jsonStr = sh.makeServiceCall(url, ServiceHandler.GET);
-
-            if (jsonStr != null) {
-                try {
-                    JSONArray jarray = new JSONArray(jsonStr);
-                    for (int i = 0; i < jarray.length(); i++) {
-                        JSONObject jsonObject = jarray.getJSONObject(i);
-                        String id = jsonObject.getString(TAG_ID);
-                        String name = jsonObject.getString(TAG_NAME);
-                        String username = jsonObject.getString
-                                (TAG_USERNAME);
-                        String email = jsonObject.getString(TAG_EMAIL);
-                        String address = jsonObject.getString
-                                (TAG_ADDRESS);
-                        String phone = jsonObject.getString(TAG_PHONE);
-                        String website = jsonObject.getString
-                                (TAG_WEBSITE);
-                        String company = jsonObject.getString
-                                (TAG_COMPANY);
-
-                        HashMap<String, String> user = new HashMap<String,
-                                String>();
-
-                        // Adding each child node to HashMap key => value
-                        user.put(TAG_ID, id);
-                        user.put(TAG_NAME, name);
-                        user.put(TAG_USERNAME, username);
-                        user.put(TAG_EMAIL, email);
-                        user.put(TAG_ADDRESS, address);
-                        user.put(TAG_PHONE, phone);
-                        user.put(TAG_WEBSITE, website);
-                        user.put(TAG_COMPANY, company);
-
-                        // Adding contact to user list
-                        userList.add(user);
-                    }
-
-                } catch (JSONException e) {
-                    Log.d(CLASS_NAME, e.getMessage());
-                }
-            } else {
-                Log.d(CLASS_NAME, "Couldn't get any data from the url");
+    private void addSearchFilter() {
+        // Capture Text in EditText
+        editSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable arg0) {
+                String text = editSearch.getText().toString().toLowerCase(Locale.getDefault());
+                userAdapter.filter(text);
             }
 
-            return null;
-        }
+            @Override
+            public void beforeTextChanged(CharSequence arg0, int arg1,
+                                          int arg2, int arg3) {
+            }
 
+            @Override
+            public void onTextChanged(CharSequence arg0, int arg1, int arg2,
+                                      int arg3) {
+            }
+        });
+    }
+
+    private void requestJSON() {
+        jsonRequestHelper = new JsonRequestHelper(this, handler, Constants.USER_REQUEST_URL);
+    }
+
+    // Handler to wait receiving json data
+    Handler handler = new Handler() {
         @Override
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
-            // Dismiss the progress dialog
-            if (progressDialog.isShowing())
-                progressDialog.dismiss();
-
-            // Updating parsed JSON data into ListView
-            ListAdapter adapter = new SimpleAdapter(
-                    UsersActivity.this, userList,
-                    R.layout.user_item, new String[]{TAG_ID, TAG_NAME,
-                    TAG_EMAIL}, new int[]{R.id.id,
-                    R.id.name, R.id.email});
-
-            setListAdapter(adapter);
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 0:
+                    GsonBuilder gsonBuilder = new GsonBuilder();
+                    Gson gson = gsonBuilder.create();
+                    User[] userArray = gson.fromJson(jsonRequestHelper.getJsonData(), User[].class);
+                    userArrayList = new ArrayList<User>(Arrays.asList(userArray));
+                    onRefreshList();
+                    break;
+                default:
+                    break;
+            }
         }
+    };
+
+    private void onRefreshList() {
+        userAdapter = new UserAdapter(this, R.layout.user_item, userArrayList);
+        listView.setAdapter(userAdapter);
+        listView.setOnItemClickListener(onClickListItem);
     }
 
-    @Override
-    protected void onListItemClick(ListView l, View v, int position, long id) {
-        HashMap<String, String> user = (HashMap<String, String>)
-                getListAdapter().getItem(position);
-        Intent albumIntent = new Intent(UsersActivity
-                .this, AlbumsActivity.class);
-        albumIntent.putExtra(TAG_USERID, user.get(TAG_ID));
-        startActivity(albumIntent);
-    }
+    private AdapterView.OnItemClickListener onClickListItem = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+            String userId = userArrayList.get(arg2).getId();
+            Intent albumIntent = new Intent(UsersActivity
+                    .this, AlbumsActivity.class);
+            albumIntent.putExtra(Constants.TAG_USERID, userId);
+            startActivity(albumIntent);
+        }
+    };
 }

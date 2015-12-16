@@ -1,137 +1,119 @@
 package com.hyogij.jsonclient;
 
-import android.app.ListActivity;
-import android.app.ProgressDialog;
+import android.app.Activity;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.Handler;
+import android.os.Message;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
-import android.widget.ListAdapter;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 
-import com.hyogij.jsonclient.JSonRequestUtils.ServiceHandler;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.hyogij.jsonclient.Adapters.AlbumAdapter;
+import com.hyogij.jsonclient.Const.Constants;
+import com.hyogij.jsonclient.JsonDatas.Album;
+import com.hyogij.jsonclient.JsonRequestUtils.JsonRequestHelper;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
+import java.util.Locale;
 
-public class AlbumsActivity extends ListActivity {
+public class AlbumsActivity extends Activity {
     private static final String CLASS_NAME = AlbumsActivity.class
             .getCanonicalName();
 
-    // URL to get users JSON
-    private static String URL_PREFIX = "http://jsonplaceholder.typicode" +
-            ".com/albums?userId=";
+    private JsonRequestHelper jsonRequestHelper = null;
 
-    // JSON Node names
-    private static final String TAG_ID = "id";
-    private static final String TAG_USERID = "userId";
-    private static final String TAG_TITLE = "title";
-    private static final String TAG_ALBUMID = "albumId";
+    private ArrayAdapter<Album> arrayAdapter = null;
+    private ArrayList<Album> albumArrayList = null;
+    private AlbumAdapter albumAdapter = null;
 
-    private ProgressDialog progressDialog = null;
-    private ArrayList<HashMap<String, String>> albumList = null;
     private ListView listView = null;
+    private EditText editSearch = null;
+
+    private StringBuilder url = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.albums_activity);
 
-        listView = getListView();
-
         Intent intent = getIntent();
-        String userId = intent.getStringExtra(TAG_USERID);
+        String userId = intent.getStringExtra(Constants.TAG_USERID);
+        url = new StringBuilder(Constants.ALBUM_REQUEST_URL);
+        url.append(userId);
 
-        albumList = new ArrayList<HashMap<String, String>>();
-        // Calling async task to get json
-        new GetUsers().execute(URL_PREFIX + userId);
+        // Search text in the listview
+        editSearch = (EditText) findViewById(R.id.search);
+        addSearchFilter();
+
+        listView = (ListView) findViewById(R.id.list);
+        requestJSON();
     }
 
-    // Async task class to get json by making HTTP call
-    private class GetUsers extends AsyncTask<String, Void, Void> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            // Showing progress dialog
-            progressDialog = new ProgressDialog(AlbumsActivity.this);
-            progressDialog.setMessage("Please wait...");
-            progressDialog.setCancelable(false);
-            progressDialog.show();
-        }
-
-        @Override
-        protected Void doInBackground(String... urls) {
-            // Creating service handler class instance
-            ServiceHandler sh = new ServiceHandler();
-            // Making a request to url and getting response
-            String jsonStr = sh.makeServiceCall(urls[0], ServiceHandler.GET);
-
-            if (jsonStr != null) {
-                try {
-                    JSONArray jarray = new JSONArray(jsonStr);
-
-                    for (int i = 0; i < jarray.length(); i++) {
-                        JSONObject jsonObject = jarray.getJSONObject(i);
-                        String id = jsonObject.getString(TAG_ID);
-                        String userid = jsonObject.getString(TAG_USERID);
-                        String title = jsonObject.getString(TAG_TITLE);
-
-                        // tmp hashmap for single contact
-                        HashMap<String, String> album = new HashMap<String,
-                                String>();
-
-                        // adding each child node to HashMap key => value
-                        album.put(TAG_ID, id);
-                        album.put(TAG_USERID, userid);
-                        album.put(TAG_TITLE, title);
-
-                        // adding contact to album list
-                        albumList.add(album);
-                    }
-
-                } catch (JSONException e) {
-                    Log.d(CLASS_NAME, e.getMessage());
-                }
-            } else {
-                Log.d(CLASS_NAME, "Couldn't get any data from the url");
+    private void addSearchFilter() {
+        // Capture Text in EditText
+        editSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable arg0) {
+                String text = editSearch.getText().toString().toLowerCase(Locale.getDefault());
+                albumAdapter.filter(text);
             }
 
-            return null;
-        }
+            @Override
+            public void beforeTextChanged(CharSequence arg0, int arg1,
+                                          int arg2, int arg3) {
+            }
 
+            @Override
+            public void onTextChanged(CharSequence arg0, int arg1, int arg2,
+                                      int arg3) {
+            }
+        });
+    }
+
+    private void requestJSON() {
+        jsonRequestHelper = new JsonRequestHelper(this, handler, url.toString());
+    }
+
+    // Handler to wait receiving json data
+    Handler handler = new Handler() {
         @Override
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
-            // Dismiss the progress dialog
-            if (progressDialog.isShowing())
-                progressDialog.dismiss();
-
-            // Updating parsed JSON data into ListView
-            ListAdapter adapter = new SimpleAdapter(
-                    AlbumsActivity.this, albumList,
-                    R.layout.album_item, new String[]{TAG_ID, TAG_TITLE}, new
-                    int[]{R
-                    .id.id, R
-                    .id.title});
-
-            setListAdapter(adapter);
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 0:
+                    GsonBuilder gsonBuilder = new GsonBuilder();
+                    Gson gson = gsonBuilder.create();
+                    Album[] userArray = gson.fromJson(jsonRequestHelper.getJsonData(), Album[].class);
+                    albumArrayList = new ArrayList<Album>(Arrays.asList(userArray));
+                    onRefreshList();
+                    break;
+                default:
+                    break;
+            }
         }
+    };
+
+    private void onRefreshList() {
+        albumAdapter = new AlbumAdapter(this, R.layout.album_item, albumArrayList);
+        listView.setAdapter(albumAdapter);
+        listView.setOnItemClickListener(onClickListItem);
     }
 
-    @Override
-    protected void onListItemClick(ListView l, View v, int position, long id) {
-        HashMap<String, String> user = (HashMap<String, String>)
-                getListAdapter().getItem(position);
-        Intent albumIntent = new Intent(AlbumsActivity
-                .this, PicturesActivity.class);
-        albumIntent.putExtra(TAG_ALBUMID, user.get(TAG_ID));
-        startActivity(albumIntent);
-    }
+    private AdapterView.OnItemClickListener onClickListItem = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+            String albumId = albumArrayList.get(arg2).getId();
+            Intent albumIntent = new Intent(AlbumsActivity
+                    .this, PicturesActivity.class);
+            albumIntent.putExtra(Constants.TAG_ALBUMID, albumId);
+            startActivity(albumIntent);
+        }
+    };
 }

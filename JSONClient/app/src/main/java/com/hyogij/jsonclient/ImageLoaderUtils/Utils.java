@@ -8,6 +8,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class Utils {
+    private static final String CLASS_NAME = Utils.class.getCanonicalName();
+
     public static String getOriginalUrl(String url) {
         String location = null;
         try {
@@ -37,7 +39,7 @@ public class Utils {
                 os.write(bytes, 0, count);
             }
         } catch (Exception ex) {
-            Log.d("URL ", "Exception " + ex.toString());
+            Log.d(CLASS_NAME, "Exception " + ex.toString());
         }
     }
 }

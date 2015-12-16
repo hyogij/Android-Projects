@@ -1,24 +1,28 @@
 package com.hyogij.jsonclient;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.Handler;
+import android.os.Message;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 
-import com.hyogij.jsonclient.ImageLoaderUtils.LazyAdapter;
-import com.hyogij.jsonclient.JSonRequestUtils.ServiceHandler;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.hyogij.jsonclient.Adapters.PictureAdapter;
+import com.hyogij.jsonclient.Const.Constants;
+import com.hyogij.jsonclient.JsonDatas.Picture;
+import com.hyogij.jsonclient.JsonRequestUtils.JsonRequestHelper;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
+import java.util.Locale;
 
 /**
  * Created by hyogij on 2015. 12. 12..
@@ -27,127 +31,94 @@ public class PicturesActivity extends Activity {
     private static final String CLASS_NAME = PicturesActivity.class
             .getCanonicalName();
 
-    // URL to get users JSON
-    private static String URL_PREFIX = "http://jsonplaceholder.typicode" +
-            ".com/photos?albumId=";
+    private JsonRequestHelper jsonRequestHelper = null;
 
-    // JSON Node names
-    private static final String TAG_ID = "id";
-    private static final String TAG_ALBUMID = "albumId";
-    private static final String TAG_TITLE = "title";
-    private static final String TAG_URL = "url";
-    private static final String TAG_THUMBNAILURL = "thumbnailUrl";
+    private ArrayAdapter<Picture> arrayAdapter = null;
+    private ArrayList<Picture> pictureArrayList = null;
+    private PictureAdapter lazyAdapter = null;
 
-    private ProgressDialog progressDialog = null;
-    private ArrayList<HashMap<String, String>> pictureList = null;
+    private ListView listView = null;
+    private EditText editSearch = null;
 
-    ListView list;
-    LazyAdapter adapter;
+    private StringBuilder url = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pictures_activity);
 
-        list = (ListView) findViewById(R.id.list);
-
         Intent intent = getIntent();
-        String albumId = intent.getStringExtra(TAG_ALBUMID);
+        String albumId = intent.getStringExtra(Constants.TAG_ALBUMID);
+        url = new StringBuilder(Constants.PICTURE_REQUEST_URL);
+        url.append(albumId);
 
-        pictureList = new ArrayList<HashMap<String, String>>();
-        // Calling async task to get json
-        new GetUsers().execute(URL_PREFIX + albumId);
+        // Search text in the listview
+        editSearch = (EditText) findViewById(R.id.search);
+        addSearchFilter();
+
+        listView = (ListView) findViewById(R.id.list);
+        requestJSON();
     }
 
-    @Override
-    public void onDestroy() {
-        list.setAdapter(null);
-        super.onDestroy();
-    }
-
-    // Async task class to get json by making HTTP call
-    private class GetUsers extends AsyncTask<String, Void, Void> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            // Showing progress dialog
-            progressDialog = new ProgressDialog(PicturesActivity.this);
-            progressDialog.setMessage("Please wait...");
-            progressDialog.setCancelable(false);
-            progressDialog.show();
-        }
-
-        @Override
-        protected Void doInBackground(String... urls) {
-            // Creating service handler class instance
-            ServiceHandler sh = new ServiceHandler();
-            // Making a request to url and getting response
-            String jsonStr = sh.makeServiceCall(urls[0], ServiceHandler.GET);
-
-            if (jsonStr != null) {
-                try {
-                    JSONArray jarray = new JSONArray(jsonStr);
-
-                    for (int i = 0; i < jarray.length(); i++) {
-                        JSONObject jsonObject = jarray.getJSONObject(i);
-                        String id = jsonObject.getString(TAG_ID);
-                        String albumId = jsonObject.getString(TAG_ALBUMID);
-                        String title = jsonObject.getString(TAG_TITLE);
-                        String url = jsonObject.getString(TAG_URL);
-                        String thumbnailUrl = jsonObject.getString
-                                (TAG_THUMBNAILURL);
-
-                        // tmp hashmap for single contact
-                        HashMap<String, String> picture = new HashMap<String,
-                                String>();
-
-                        // adding each child node to HashMap key => value
-                        picture.put(TAG_ID, id);
-                        picture.put(TAG_ALBUMID, albumId);
-                        picture.put(TAG_TITLE, title);
-                        picture.put(TAG_URL, url);
-                        picture.put(TAG_THUMBNAILURL, thumbnailUrl);
-
-                        // adding contact to picture list
-                        pictureList.add(picture);
-                    }
-
-                } catch (JSONException e) {
-                    Log.d(CLASS_NAME, e.getMessage());
-                }
-            } else {
-                Log.d(CLASS_NAME, "Couldn't get any data from the url");
+    private void addSearchFilter() {
+        // Capture Text in EditText
+        editSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable arg0) {
+                String text = editSearch.getText().toString().toLowerCase(Locale.getDefault());
+                lazyAdapter.filter(text);
             }
 
-            return null;
-        }
+            @Override
+            public void beforeTextChanged(CharSequence arg0, int arg1,
+                                          int arg2, int arg3) {
+            }
 
-        @Override
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
-            // Dismiss the progress dialog
-            if (progressDialog.isShowing())
-                progressDialog.dismiss();
-
-            // Updating parsed JSON data into ListView
-            adapter = new LazyAdapter(PicturesActivity.this, pictureList);
-            list.setAdapter(adapter);
-            list.setOnItemClickListener(itemClickListener);
-        }
+            @Override
+            public void onTextChanged(CharSequence arg0, int arg1, int arg2,
+                                      int arg3) {
+            }
+        });
     }
 
-    private AdapterView.OnItemClickListener itemClickListener = new
-            AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int
-                        position,
-                                        long l_position) {
-                    HashMap<String, String> picture = pictureList.get(position);
-                    Intent pictureViewIntent = new Intent(PicturesActivity
-                            .this, PictureViewActivity.class);
-                    pictureViewIntent.putExtra(TAG_URL, picture.get(TAG_URL));
-                    startActivity(pictureViewIntent);
-                }
-            };
+    private void requestJSON() {
+        jsonRequestHelper = new JsonRequestHelper(this, handler, url.toString());
+    }
+
+    // Handler to wait receiving json data
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 0:
+                    GsonBuilder gsonBuilder = new GsonBuilder();
+                    Gson gson = gsonBuilder.create();
+                    Picture[] pictureArray = gson.fromJson(jsonRequestHelper.getJsonData(),
+                            Picture[].class);
+                    pictureArrayList = new ArrayList<Picture>(Arrays.asList(pictureArray));
+                    onRefreshList();
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
+    private void onRefreshList() {
+        // Updating parsed JSON data into ListView
+        lazyAdapter = new PictureAdapter(this, R.layout.picture_item, pictureArrayList);
+        listView.setAdapter(lazyAdapter);
+        listView.setOnItemClickListener(onClickListItem);
+    }
+
+    private AdapterView.OnItemClickListener onClickListItem = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+            String url = pictureArrayList.get(arg2).getUrl();
+            Intent pictureViewIntent = new Intent(PicturesActivity
+                    .this, PictureViewActivity.class);
+            pictureViewIntent.putExtra(Constants.TAG_URL, url);
+            startActivity(pictureViewIntent);
+        }
+    };
 }
