@@ -42,7 +42,6 @@ public class PictureAdapter extends ArrayAdapter<Picture> {
             v = vi.inflate(R.layout.picture_item, null);
         }
 
-        Log.d(CLASS_NAME, "getView " + items.size() + " / " + position);
         Picture picture = items.get(position);
         if (picture != null) {
             TextView albumId = (TextView) v.findViewById(R.id.albumId);
@@ -71,7 +70,6 @@ public class PictureAdapter extends ArrayAdapter<Picture> {
                 }
             }
         }
-        Log.d(CLASS_NAME, "filter " + items.size());
         notifyDataSetChanged();
     }
 }
