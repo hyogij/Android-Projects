@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.RecyclerView
-    android:id="@+id/user_list"
-    android:name="com.hyogij.jsonclientmasterdetailview.UserListFragment"
+    android:id="@+id/picture_list"
+    android:name="com.hyogij.jsonclientmasterdetailview.PictureListFragment"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -10,5 +10,5 @@
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
-    tools:context="com.hyogij.jsonclientmasterdetailview.UserListActivity"
-    tools:listitem="@layout/user_list_content"/>
+    tools:context="com.hyogij.jsonclientmasterdetailview.PictureListActivity"
+    tools:listitem="@layout/picture_list_content"/>

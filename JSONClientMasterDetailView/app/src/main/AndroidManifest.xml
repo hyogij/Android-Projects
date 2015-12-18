@@ -31,6 +31,16 @@
             android:windowSoftInputMode="stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.hyogij.jsonclientmasterdetailview.UserListActivity"/>
+        </activity>
+        <activity
+            android:name=".PictureListActivity"
+            android:label="@string/albums_activity"
+            android:parentActivityName=".AlbumListActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.hyogij.jsonclientmasterdetailview.AlbumListActivity"/>
         </activity>
         <activity
@@ -41,7 +51,7 @@
             android:windowSoftInputMode="stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.hyogij.jsonclientmasterdetailview.AlbumListActivity"/>
+                android:value="com.hyogij.jsonclientmasterdetailview.UserListActivity"/>
         </activity>
         <activity
             android:name=".CommentListActivity"

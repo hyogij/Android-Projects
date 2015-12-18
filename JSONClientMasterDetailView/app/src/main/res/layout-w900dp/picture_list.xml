@@ -14,8 +14,8 @@
     <!-- This layout is a two-pane layout for the Users master/detail flow. -->
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/user_list"
-        android:name="com.hyogij.jsonclientmasterdetailview.UserListFragment"
+        android:id="@+id/picture_list"
+        android:name="com.hyogij.jsonclientmasterdetailview.PictureListFragment"
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="@dimen/item_width"
@@ -23,11 +23,11 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         app:layoutManager="LinearLayoutManager"
-        tools:context="com.hyogij.jsonclientmasterdetailview.UserListActivity"
-        tools:listitem="@layout/user_list_content"/>
+        tools:context="com.hyogij.jsonclientmasterdetailview.PictureListFragment"
+        tools:listitem="@layout/picture_list_content"/>
 
     <FrameLayout
-        android:id="@+id/user_detail_container"
+        android:id="@+id/picture_detail_container"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="3"/>
