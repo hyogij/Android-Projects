@@ -6,7 +6,7 @@ import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.widget.ImageView;
 
-import com.hyogij.jsonclient.R;
+import com.hyogij.jsonclientmasterdetailview.R;
 
 import java.io.File;
 import java.io.FileInputStream;

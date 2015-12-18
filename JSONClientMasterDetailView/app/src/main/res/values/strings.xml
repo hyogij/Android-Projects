@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">JSONClientMasterDetailView</string>
+    <string name="app_name">JSONClient Master/Detail View</string>
     <string name="title_user_detail">User Detail</string>
 
     <string name="users_activity">Users List</string>
