@@ -2,6 +2,8 @@ package com.hyogij.jsonclientmasterdetailview.RecyclerViewAdapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.hyogij.jsonclientmasterdetailview.CommentListActivity;
+import com.hyogij.jsonclientmasterdetailview.CommentListFragment;
 import com.hyogij.jsonclientmasterdetailview.Const.Constants;
 import com.hyogij.jsonclientmasterdetailview.JsonDatas.Post;
 import com.hyogij.jsonclientmasterdetailview.R;
@@ -17,13 +20,15 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 /**
- * Created by hyogij on 15. 12. 17..
+ * An adapter class to display Post item.
  */
-public class PostItemRecycleViewAdapter extends RecyclerView.Adapter<PostItemRecycleViewAdapter.ViewHolder> {
-    private static final String CLASS_NAME = PostItemRecycleViewAdapter.class.getCanonicalName();
+public class PostItemRecycleViewAdapter extends RecyclerView
+        .Adapter<PostItemRecycleViewAdapter.ViewHolder> {
+    private static final String CLASS_NAME = PostItemRecycleViewAdapter.class
+            .getCanonicalName();
 
     private ArrayList<Post> items = null;
-    private ArrayList<Post> list = null; // Original post list
+    private ArrayList<Post> list = null; // Original Post list
     private Context context = null;
 
     /**
@@ -32,7 +37,8 @@ public class PostItemRecycleViewAdapter extends RecyclerView.Adapter<PostItemRec
      */
     private boolean twoPane;
 
-    public PostItemRecycleViewAdapter(Context context, ArrayList<Post> items, boolean twoPane) {
+    public PostItemRecycleViewAdapter(Context context, ArrayList<Post> items,
+                                      boolean twoPane) {
         this.context = context;
         this.items = items;
 
@@ -53,25 +59,31 @@ public class PostItemRecycleViewAdapter extends RecyclerView.Adapter<PostItemRec
         final Post post = items.get(position);
 
         viewHolder.post = post;
-        viewHolder.userId.setText(context.getString(R.string.userId) + post.getUserId());
+        viewHolder.userId.setText(context.getString(R.string.userId) + post
+                .getUserId());
         viewHolder.id.setText(context.getString(R.string.id) + post.getId());
-        viewHolder.title.setText(context.getString(R.string.title) + post.getTitle());
-        viewHolder.body.setText(context.getString(R.string.body) + post.getBody());
+        viewHolder.title.setText(context.getString(R.string.title) + post
+                .getTitle());
+        viewHolder.body.setText(context.getString(R.string.body) + post
+                .getBody());
 
         viewHolder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String postId = viewHolder.post.getId();
                 if (twoPane) {
-//                    Bundle arguments = new Bundle();
-//                    arguments.putString(ItemDetailFragment.ARG_ITEM_ID, holder.mItem.id);
-//                    ItemDetailFragment fragment = new ItemDetailFragment();
-//                    fragment.setArguments(arguments);
-//                    getSupportFragmentManager().beginTransaction()
-//                            .replace(R.id.item_detail_container, fragment)
-//                            .commit();
+                    Bundle arguments = new Bundle();
+                    arguments.putString(Constants.TAG_POSTID,
+                            postId);
+                    CommentListFragment fragment = new CommentListFragment();
+                    fragment.setArguments(arguments);
+                    ((FragmentActivity) context).getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.post_detail_container, fragment)
+                            .commit();
                 } else {
-                    String postId = viewHolder.post.getId();
-                    Intent intent = new Intent(context, CommentListActivity.class);
+                    Intent intent = new Intent(context, CommentListActivity
+                            .class);
                     intent.putExtra(Constants.TAG_POSTID, postId);
                     context.startActivity(intent);
                 }
@@ -92,7 +104,8 @@ public class PostItemRecycleViewAdapter extends RecyclerView.Adapter<PostItemRec
             items.addAll(list);
         } else {
             for (Post post : list) {
-                if (post.toString().toLowerCase(Locale.getDefault()).contains(charText)) {
+                if (post.toString().toLowerCase(Locale.getDefault()).contains
+                        (charText)) {
                     items.add(post);
                 }
             }

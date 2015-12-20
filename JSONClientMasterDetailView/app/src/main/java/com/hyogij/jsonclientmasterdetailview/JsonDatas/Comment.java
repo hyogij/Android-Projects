@@ -1,7 +1,7 @@
 package com.hyogij.jsonclientmasterdetailview.JsonDatas;
 
 /**
- * Created by hyogij on 15. 12. 15..
+ * A class for Comment data.
  */
 public class Comment {
     private String postId = null;
@@ -10,7 +10,8 @@ public class Comment {
     private String email = null;
     private String body = null;
 
-    public Comment(String postId, String id, String name, String email, String body) {
+    public Comment(String postId, String id, String name, String email,
+                   String body) {
         this.postId = postId;
         this.id = id;
         this.name = name;

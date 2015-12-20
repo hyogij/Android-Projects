@@ -14,13 +14,15 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 /**
- * Created by hyogij on 15. 12. 17..
+ * An adapter class to display Comment item.
  */
-public class CommentItemRecycleViewAdapter extends RecyclerView.Adapter<CommentItemRecycleViewAdapter.ViewHolder> {
-    private static final String CLASS_NAME = CommentItemRecycleViewAdapter.class.getCanonicalName();
+public class CommentItemRecycleViewAdapter extends RecyclerView
+        .Adapter<CommentItemRecycleViewAdapter.ViewHolder> {
+    private static final String CLASS_NAME = CommentItemRecycleViewAdapter
+            .class.getCanonicalName();
 
     private ArrayList<Comment> items = null;
-    private ArrayList<Comment> list = null; // Original post list
+    private ArrayList<Comment> list = null; // Original Comment list
     private Context context = null;
 
     /**
@@ -29,7 +31,8 @@ public class CommentItemRecycleViewAdapter extends RecyclerView.Adapter<CommentI
      */
     private boolean twoPane;
 
-    public CommentItemRecycleViewAdapter(Context context, ArrayList<Comment> items, boolean twoPane) {
+    public CommentItemRecycleViewAdapter(Context context, ArrayList<Comment>
+            items, boolean twoPane) {
         this.context = context;
         this.items = items;
 
@@ -50,11 +53,15 @@ public class CommentItemRecycleViewAdapter extends RecyclerView.Adapter<CommentI
         final Comment comment = items.get(position);
 
         viewHolder.comment = comment;
-        viewHolder.postId.setText(context.getString(R.string.postId) + comment.getPostId());
+        viewHolder.postId.setText(context.getString(R.string.postId) +
+                comment.getPostId());
         viewHolder.id.setText(context.getString(R.string.id) + comment.getId());
-        viewHolder.name.setText(context.getString(R.string.name) + comment.getName());
-        viewHolder.email.setText(context.getString(R.string.email) + comment.getEmail());
-        viewHolder.body.setText(context.getString(R.string.email) + comment.getBody());
+        viewHolder.name.setText(context.getString(R.string.name) + comment
+                .getName());
+        viewHolder.email.setText(context.getString(R.string.email) + comment
+                .getEmail());
+        viewHolder.body.setText(context.getString(R.string.email) + comment
+                .getBody());
     }
 
     @Override
@@ -70,7 +77,8 @@ public class CommentItemRecycleViewAdapter extends RecyclerView.Adapter<CommentI
             items.addAll(list);
         } else {
             for (Comment comment : list) {
-                if (comment.toString().toLowerCase(Locale.getDefault()).contains(charText)) {
+                if (comment.toString().toLowerCase(Locale.getDefault())
+                        .contains(charText)) {
                     items.add(comment);
                 }
             }

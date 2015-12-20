@@ -2,6 +2,8 @@ package com.hyogij.jsonclientmasterdetailview.RecyclerViewAdapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,19 +13,22 @@ import android.widget.TextView;
 import com.hyogij.jsonclientmasterdetailview.Const.Constants;
 import com.hyogij.jsonclientmasterdetailview.JsonDatas.Album;
 import com.hyogij.jsonclientmasterdetailview.PictureListActivity;
+import com.hyogij.jsonclientmasterdetailview.PictureListFragment;
 import com.hyogij.jsonclientmasterdetailview.R;
 
 import java.util.ArrayList;
 import java.util.Locale;
 
 /**
- * Created by hyogij on 15. 12. 17..
+ * An adapter class to display Album item.
  */
-public class AlbumItemRecycleViewAdapter extends RecyclerView.Adapter<AlbumItemRecycleViewAdapter.ViewHolder> {
-    private static final String CLASS_NAME = AlbumItemRecycleViewAdapter.class.getCanonicalName();
+public class AlbumItemRecycleViewAdapter extends RecyclerView
+        .Adapter<AlbumItemRecycleViewAdapter.ViewHolder> {
+    private static final String CLASS_NAME = AlbumItemRecycleViewAdapter
+            .class.getCanonicalName();
 
     private ArrayList<Album> items = null;
-    private ArrayList<Album> list = null; // Original album list
+    private ArrayList<Album> list = null; // Original Album list
     private Context context = null;
 
     /**
@@ -32,7 +37,8 @@ public class AlbumItemRecycleViewAdapter extends RecyclerView.Adapter<AlbumItemR
      */
     private boolean twoPane;
 
-    public AlbumItemRecycleViewAdapter(Context context, ArrayList<Album> items, boolean twoPane) {
+    public AlbumItemRecycleViewAdapter(Context context, ArrayList<Album>
+            items, boolean twoPane) {
         this.context = context;
         this.items = items;
 
@@ -53,24 +59,29 @@ public class AlbumItemRecycleViewAdapter extends RecyclerView.Adapter<AlbumItemR
         final Album album = items.get(position);
 
         viewHolder.album = album;
-        viewHolder.userId.setText(context.getString(R.string.userId) + album.getUserId());
+        viewHolder.userId.setText(context.getString(R.string.userId) + album
+                .getUserId());
         viewHolder.id.setText(context.getString(R.string.id) + album.getId());
-        viewHolder.title.setText(context.getString(R.string.title) + album.getTitle());
+        viewHolder.title.setText(context.getString(R.string.title) + album
+                .getTitle());
 
         viewHolder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String albumId = viewHolder.album.getId();
                 if (twoPane) {
-//                    Bundle arguments = new Bundle();
-//                    arguments.putString(ItemDetailFragment.ARG_ITEM_ID, holder.mItem.id);
-//                    ItemDetailFragment fragment = new ItemDetailFragment();
-//                    fragment.setArguments(arguments);
-//                    getSupportFragmentManager().beginTransaction()
-//                            .replace(R.id.item_detail_container, fragment)
-//                            .commit();
+                    Bundle arguments = new Bundle();
+                    arguments.putString(Constants.TAG_ALBUMID,
+                            albumId);
+                    PictureListFragment fragment = new PictureListFragment();
+                    fragment.setArguments(arguments);
+                    ((FragmentActivity) context).getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.album_detail_container, fragment)
+                            .commit();
                 } else {
-                    String albumId = viewHolder.album.getId();
-                    Intent intent = new Intent(context, PictureListActivity.class);
+                    Intent intent = new Intent(context, PictureListActivity
+                            .class);
                     intent.putExtra(Constants.TAG_ALBUMID, albumId);
                     context.startActivity(intent);
                 }
@@ -91,7 +102,8 @@ public class AlbumItemRecycleViewAdapter extends RecyclerView.Adapter<AlbumItemR
             items.addAll(list);
         } else {
             for (Album album : list) {
-                if (album.toString().toLowerCase(Locale.getDefault()).contains(charText)) {
+                if (album.toString().toLowerCase(Locale.getDefault())
+                        .contains(charText)) {
                     items.add(album);
                 }
             }

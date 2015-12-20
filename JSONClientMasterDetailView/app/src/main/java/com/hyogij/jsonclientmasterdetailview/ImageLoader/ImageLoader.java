@@ -1,9 +1,10 @@
-package com.hyogij.jsonclientmasterdetailview.ImageLoaderUtils;
+package com.hyogij.jsonclientmasterdetailview.ImageLoader;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.hyogij.jsonclientmasterdetailview.R;
@@ -69,7 +70,7 @@ public class ImageLoader {
         try {
             Bitmap bitmap = null;
 
-            String originalUrl = Utils.getOriginalUrl(url);
+            String originalUrl = ImageLoaderUtils.getOriginalUrl(url);
             URL imageUrl = new URL(originalUrl);
             HttpURLConnection conn = (HttpURLConnection) imageUrl
                     .openConnection();
@@ -78,7 +79,7 @@ public class ImageLoader {
             conn.setInstanceFollowRedirects(true);
             InputStream is = conn.getInputStream();
             OutputStream os = new FileOutputStream(f);
-            Utils.CopyStream(is, os);
+            ImageLoaderUtils.CopyStream(is, os);
             os.close();
             conn.disconnect();
 
@@ -109,8 +110,10 @@ public class ImageLoader {
             stream2.close();
             return bitmap;
         } catch (FileNotFoundException e) {
+            Log.d(CLASS_NAME, e.getMessage());
             e.printStackTrace();
         } catch (IOException e) {
+            Log.d(CLASS_NAME, e.getMessage());
             e.printStackTrace();
         }
         return null;

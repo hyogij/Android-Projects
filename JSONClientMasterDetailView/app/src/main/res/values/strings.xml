@@ -25,4 +25,8 @@
 
     <string name="album">Album</string>
     <string name="post">Post</string>
+
+    <string name="wait">Please wait...</string>
+    <string name="json_error">Error occurred during json request..</string>
+
 </resources>

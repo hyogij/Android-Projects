@@ -1,29 +1,33 @@
 package com.hyogij.jsonclientmasterdetailview.RecyclerViewAdapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.hyogij.jsonclientmasterdetailview.ImageLoaderUtils.ImageLoader;
+import com.hyogij.jsonclientmasterdetailview.Const.Constants;
+import com.hyogij.jsonclientmasterdetailview.ImageLoader.ImageLoader;
 import com.hyogij.jsonclientmasterdetailview.JsonDatas.Picture;
+import com.hyogij.jsonclientmasterdetailview.PictureViewActivity;
 import com.hyogij.jsonclientmasterdetailview.R;
 
 import java.util.ArrayList;
 import java.util.Locale;
 
 /**
- * Created by hyogij on 15. 12. 17..
+ * An adapter class to display Picture item.
  */
-public class PictureItemRecycleViewAdapter extends RecyclerView.Adapter<PictureItemRecycleViewAdapter.ViewHolder> {
-    private static final String CLASS_NAME = PictureItemRecycleViewAdapter.class.getCanonicalName();
+public class PictureItemRecycleViewAdapter extends RecyclerView
+        .Adapter<PictureItemRecycleViewAdapter.ViewHolder> {
+    private static final String CLASS_NAME = PictureItemRecycleViewAdapter
+            .class.getCanonicalName();
 
     private ArrayList<Picture> items = null;
-    private ArrayList<Picture> list = null; // Original album list
+    private ArrayList<Picture> list = null; // Original Picture list
     private Context context = null;
 
     /**
@@ -33,7 +37,8 @@ public class PictureItemRecycleViewAdapter extends RecyclerView.Adapter<PictureI
     private boolean twoPane;
     public ImageLoader imageLoader = null;
 
-    public PictureItemRecycleViewAdapter(Context context, ArrayList<Picture> items, boolean twoPane) {
+    public PictureItemRecycleViewAdapter(Context context, ArrayList<Picture>
+            items, boolean twoPane) {
         this.context = context;
         this.items = items;
 
@@ -41,8 +46,6 @@ public class PictureItemRecycleViewAdapter extends RecyclerView.Adapter<PictureI
         this.list.addAll(items);
         this.twoPane = twoPane;
         imageLoader = new ImageLoader(context.getApplicationContext());
-
-        Log.d(CLASS_NAME, "PictureItemRecycleViewAdapter " + items.size());
     }
 
     @Override
@@ -57,10 +60,25 @@ public class PictureItemRecycleViewAdapter extends RecyclerView.Adapter<PictureI
         final Picture picture = items.get(position);
 
         viewHolder.picture = picture;
-        viewHolder.albumId.setText(context.getString(R.string.albumId) + picture.getAlbumId());
+        viewHolder.albumId.setText(context.getString(R.string.albumId) +
+                picture.getAlbumId());
         viewHolder.id.setText(context.getString(R.string.id) + picture.getId());
-        viewHolder.title.setText(context.getString(R.string.title) + picture.getTitle());
+        viewHolder.title.setText(context.getString(R.string.title) + picture
+                .getTitle());
         imageLoader.DisplayImage(picture.getThumbnailUrl(), viewHolder.image);
+
+        viewHolder.view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = viewHolder.picture.getUrl();
+                String id = viewHolder.picture.getId();
+                Intent pictureViewIntent = new Intent(context,
+                        PictureViewActivity.class);
+                pictureViewIntent.putExtra(Constants.TAG_URL, url);
+                pictureViewIntent.putExtra(Constants.TAG_ID, id);
+                context.startActivity(pictureViewIntent);
+            }
+        });
     }
 
     @Override
@@ -76,7 +94,8 @@ public class PictureItemRecycleViewAdapter extends RecyclerView.Adapter<PictureI
             items.addAll(list);
         } else {
             for (Picture picture : list) {
-                if (picture.toString().toLowerCase(Locale.getDefault()).contains(charText)) {
+                if (picture.toString().toLowerCase(Locale.getDefault())
+                        .contains(charText)) {
                     items.add(picture);
                 }
             }

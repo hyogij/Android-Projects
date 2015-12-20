@@ -1,7 +1,7 @@
 package com.hyogij.jsonclientmasterdetailview.JsonDatas;
 
 /**
- * Created by hyogij on 15. 12. 14..
+ * A class for User data.
  */
 public class User {
     private String id = null;

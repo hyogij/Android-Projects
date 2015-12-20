@@ -15,7 +15,6 @@
         <activity
             android:name=".UserListActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -27,7 +26,6 @@
             android:name=".AlbumListActivity"
             android:label="@string/albums_activity"
             android:parentActivityName=".UserListActivity"
-            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -35,19 +33,26 @@
         </activity>
         <activity
             android:name=".PictureListActivity"
-            android:label="@string/albums_activity"
+            android:label="@string/pictures_activity"
             android:parentActivityName=".AlbumListActivity"
-            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.hyogij.jsonclientmasterdetailview.AlbumListActivity"/>
         </activity>
         <activity
+            android:name=".PictureViewActivity"
+            android:label="@string/picture_view_activity"
+            android:parentActivityName=".PictureListActivity"
+            android:windowSoftInputMode="stateHidden">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.hyogij.jsonclientmasterdetailview.PictureListActivity"/>
+        </activity>
+        <activity
             android:name=".PostListActivity"
-            android:label="@string/albums_activity"
+            android:label="@string/posts_activity"
             android:parentActivityName=".UserListActivity"
-            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -57,7 +62,6 @@
             android:name=".CommentListActivity"
             android:label="@string/comments_activity"
             android:parentActivityName=".PostListActivity"
-            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

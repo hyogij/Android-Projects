@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -19,18 +18,21 @@ import com.google.gson.GsonBuilder;
 import com.hyogij.jsonclientmasterdetailview.Const.Constants;
 import com.hyogij.jsonclientmasterdetailview.JsonDatas.Album;
 import com.hyogij.jsonclientmasterdetailview.JsonRequestUtils.JsonRequestHelper;
-import com.hyogij.jsonclientmasterdetailview.RecyclerViewAdapter.AlbumItemRecycleViewAdapter;
-import com.hyogij.jsonclientmasterdetailview.StringUtils.Utils;
+import com.hyogij.jsonclientmasterdetailview.RecyclerViewAdapter
+        .AlbumItemRecycleViewAdapter;
+import com.hyogij.jsonclientmasterdetailview.Util.Utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
 
 /**
- * An activity representing a single User detail screen. This
- * activity is only used narrow width devices. On tablet-size devices,
- * item details are presented side-by-side with a list of items
- * in a {@link UserListActivity}.
+ * An activity representing a list of Albums. This activity has different
+ * presentations for handset and tablet-size devices. On handsets, the
+ * activity presents a list of Albums, which when touched, lead to a {@link
+ * PictureListActivity} representing a list of Pictures. On tablets, the
+ * activity presents the list of Albums and a list of Pictures side-by-side
+ * using two vertical panes.
  */
 public class AlbumListActivity extends AppCompatActivity {
     private static final String CLASS_NAME = AlbumListActivity.class
@@ -64,8 +66,9 @@ public class AlbumListActivity extends AppCompatActivity {
         url.append(userId);
 
         // Change an activity name
-        setTitle(Utils.getActvityTitle(getString(R.string.albums_activity), Constants
-                .TAG_USERID, userId));
+        setTitle(Utils.getActvityTitle(getString(R.string.albums_activity),
+                Constants
+                        .TAG_USERID, userId));
 
         recyclerView = findViewById(R.id.album_list);
         assert recyclerView != null;
@@ -80,7 +83,6 @@ public class AlbumListActivity extends AppCompatActivity {
 
         // Search text in the listview
         editSearch = (EditText) findViewById(R.id.search);
-        addSearchFilter();
 
         requestJSON();
     }
@@ -89,17 +91,43 @@ public class AlbumListActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
-            // This ID represents the Home or Up button. In the case of this
-            // activity, the Up button is shown. Use NavUtils to allow users
-            // to navigate up one level in the application structure. For
-            // more details, see the Navigation pattern on Android Design:
-            //
-            // http://developer.android.com/design/patterns/navigation.html#up-vs-back
-            //
-            NavUtils.navigateUpTo(this, new Intent(this, UserListActivity.class));
+            finish();
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void requestJSON() {
+        jsonRequestHelper = new JsonRequestHelper(this, handler, url.toString
+                ());
+    }
+
+    // Handler to wait receiving json data
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 0:
+                    GsonBuilder gsonBuilder = new GsonBuilder();
+                    Gson gson = gsonBuilder.create();
+                    Album[] array = gson.fromJson(jsonRequestHelper
+                            .getJsonData(), Album[].class);
+                    arrayList = new ArrayList<Album>(Arrays.asList(array));
+                    onRefreshList();
+                    addSearchFilter();
+                    break;
+                case 1:
+                    Utils.showToast(getApplicationContext(), getString(R
+                            .string.json_error));
+                default:
+                    break;
+            }
+        }
+    };
+
+    private void onRefreshList() {
+        adapter = new AlbumItemRecycleViewAdapter(this, arrayList, twoPane);
+        ((RecyclerView) recyclerView).setAdapter(adapter);
     }
 
     private void addSearchFilter() {
@@ -107,7 +135,8 @@ public class AlbumListActivity extends AppCompatActivity {
         editSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable arg0) {
-                String text = editSearch.getText().toString().toLowerCase(Locale.getDefault());
+                String text = editSearch.getText().toString().toLowerCase
+                        (Locale.getDefault());
                 adapter.filter(text);
             }
 
@@ -121,32 +150,5 @@ public class AlbumListActivity extends AppCompatActivity {
                                       int arg3) {
             }
         });
-    }
-
-    private void requestJSON() {
-        jsonRequestHelper = new JsonRequestHelper(this, handler, url.toString());
-    }
-
-    // Handler to wait receiving json data
-    Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case 0:
-                    GsonBuilder gsonBuilder = new GsonBuilder();
-                    Gson gson = gsonBuilder.create();
-                    Album[] array = gson.fromJson(jsonRequestHelper.getJsonData(), Album[].class);
-                    arrayList = new ArrayList<Album>(Arrays.asList(array));
-                    onRefreshList();
-                    break;
-                default:
-                    break;
-            }
-        }
-    };
-
-    private void onRefreshList() {
-        adapter = new AlbumItemRecycleViewAdapter(this, arrayList, twoPane);
-        ((RecyclerView) recyclerView).setAdapter(adapter);
     }
 }

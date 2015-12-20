@@ -1,4 +1,4 @@
-package com.hyogij.jsonclientmasterdetailview.ImageLoaderUtils;
+package com.hyogij.jsonclientmasterdetailview.ImageLoader;
 
 import android.content.Context;
 
@@ -16,7 +16,8 @@ public class FileCache {
     }
 
     public File getFile(String url) {
-        // Identify images by hashcode. Not a perfect solution, good for the demo.
+        // Identify images by hashcode. Not a perfect solution, good for the
+        // demo.
         String filename = String.valueOf(url.hashCode());
         File f = new File(cacheDir, filename);
         return f;

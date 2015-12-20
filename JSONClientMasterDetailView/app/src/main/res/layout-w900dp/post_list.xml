@@ -11,25 +11,34 @@
               android:showDividers="middle"
               tools:context="com.hyogij.jsonclientmasterdetailview.PostListActivity">
 
-    <!-- This layout is a two-pane layout for the Users master/detail flow. -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/user_list"
-        android:name="com.hyogij.jsonclientmasterdetailview.PostListFragment"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="@dimen/item_width"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        app:layoutManager="LinearLayoutManager"
-        tools:context="com.hyogij.jsonclientmasterdetailview.PostListActivity"
-        tools:listitem="@layout/post_list_content"/>
+        <EditText
+            android:id="@+id/search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"/>
+
+        <!-- This layout is a two-pane layout for the Users master/detail flow. -->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/post_list"
+            android:name="com.hyogij.jsonclientmasterdetailview.PostListFragment"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="LinearLayoutManager"
+            tools:context="com.hyogij.jsonclientmasterdetailview.PostListActivity"
+            tools:listitem="@layout/post_list_content"/>
+    </LinearLayout>
 
     <FrameLayout
         android:id="@+id/post_detail_container"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="3"/>
-
+        android:layout_weight="2"/>
 </LinearLayout>

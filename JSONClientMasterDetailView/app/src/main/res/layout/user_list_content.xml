@@ -65,4 +65,9 @@
             android:layout_weight="1"
             android:text="@string/post"/>
     </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorPrimary"/>
 </LinearLayout>

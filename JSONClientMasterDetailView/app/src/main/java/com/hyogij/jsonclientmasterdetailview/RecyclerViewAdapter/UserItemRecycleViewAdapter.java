@@ -19,13 +19,15 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 /**
- * Created by hyogij on 15. 12. 17..
+ * An adapter class to display User item.
  */
-public class UserItemRecycleViewAdapter extends RecyclerView.Adapter<UserItemRecycleViewAdapter.ViewHolder> {
-    private static final String CLASS_NAME = UserItemRecycleViewAdapter.class.getCanonicalName();
+public class UserItemRecycleViewAdapter extends RecyclerView
+        .Adapter<UserItemRecycleViewAdapter.ViewHolder> {
+    private static final String CLASS_NAME = UserItemRecycleViewAdapter.class
+            .getCanonicalName();
 
     private ArrayList<User> items = null;
-    private ArrayList<User> list = null; // Original user list
+    private ArrayList<User> list = null; // Original User list
     private Context context = null;
 
     /**
@@ -34,7 +36,8 @@ public class UserItemRecycleViewAdapter extends RecyclerView.Adapter<UserItemRec
      */
     private boolean twoPane;
 
-    public UserItemRecycleViewAdapter(Context context, ArrayList<User> items, boolean twoPane) {
+    public UserItemRecycleViewAdapter(Context context, ArrayList<User> items,
+                                      boolean twoPane) {
         this.context = context;
         this.items = items;
 
@@ -56,13 +59,20 @@ public class UserItemRecycleViewAdapter extends RecyclerView.Adapter<UserItemRec
 
         viewHolder.user = user;
         viewHolder.id.setText(context.getString(R.string.id) + user.getId());
-        viewHolder.name.setText(context.getString(R.string.name) + user.getName());
-        viewHolder.username.setText(context.getString(R.string.username) + user.getUsername());
-        viewHolder.email.setText(context.getString(R.string.email) + user.getEmail());
-        viewHolder.address.setText(context.getString(R.string.address) + user.getAddress().toString());
-        viewHolder.phone.setText(context.getString(R.string.phone) + user.getPhone());
-        viewHolder.website.setText(context.getString(R.string.website) + user.getWebsite());
-        viewHolder.company.setText(context.getString(R.string.company) + user.getCompany().toString());
+        viewHolder.name.setText(context.getString(R.string.name) + user
+                .getName());
+        viewHolder.username.setText(context.getString(R.string.username) +
+                user.getUsername());
+        viewHolder.email.setText(context.getString(R.string.email) + user
+                .getEmail());
+        viewHolder.address.setText(context.getString(R.string.address) + user
+                .getAddress().toString());
+        viewHolder.phone.setText(context.getString(R.string.phone) + user
+                .getPhone());
+        viewHolder.website.setText(context.getString(R.string.website) + user
+                .getWebsite());
+        viewHolder.company.setText(context.getString(R.string.company) + user
+                .getCompany().toString());
 
         viewHolder.btnAlbum.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,7 +102,8 @@ public class UserItemRecycleViewAdapter extends RecyclerView.Adapter<UserItemRec
             items.addAll(list);
         } else {
             for (User user : list) {
-                if (user.toString().toLowerCase(Locale.getDefault()).contains(charText)) {
+                if (user.toString().toLowerCase(Locale.getDefault()).contains
+                        (charText)) {
                     items.add(user);
                 }
             }
@@ -101,24 +112,14 @@ public class UserItemRecycleViewAdapter extends RecyclerView.Adapter<UserItemRec
     }
 
     private void startActivity(String userId, boolean isAlbumsActivity) {
-        if (twoPane) {
-//                    Bundle arguments = new Bundle();
-//                    arguments.putString(UserDetailFragment.ARG_ITEM_ID, holder.mItem.id);
-//                    UserDetailFragment fragment = new UserDetailFragment();
-//                    fragment.setArguments(arguments);
-//                    context.getSupportFragmentManager().beginTransaction()
-//                            .replace(R.id.user_detail_container, fragment)
-//                            .commit();
+        Intent intent = null;
+        if (isAlbumsActivity == true) {
+            intent = new Intent(context, AlbumListActivity.class);
         } else {
-            Intent intent = null;
-            if (isAlbumsActivity == true) {
-                intent = new Intent(context, AlbumListActivity.class);
-            } else {
-                intent = new Intent(context, PostListActivity.class);
-            }
-            intent.putExtra(Constants.TAG_USERID, userId);
-            context.startActivity(intent);
+            intent = new Intent(context, PostListActivity.class);
         }
+        intent.putExtra(Constants.TAG_USERID, userId);
+        context.startActivity(intent);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

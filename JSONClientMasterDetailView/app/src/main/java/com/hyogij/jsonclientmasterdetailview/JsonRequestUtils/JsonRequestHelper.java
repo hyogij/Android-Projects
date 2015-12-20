@@ -6,6 +6,8 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.util.Log;
 
+import com.hyogij.jsonclientmasterdetailview.R;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,10 +16,11 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * Created by hyogij on 15. 12. 15..
+ * An helper class for JSON request.
  */
 public class JsonRequestHelper {
-    private static final String CLASS_NAME = JsonRequestHelper.class.getCanonicalName();
+    private static final String CLASS_NAME = JsonRequestHelper.class
+            .getCanonicalName();
 
     private ProgressDialog progressDialog = null;
     private Handler handler = null;
@@ -45,7 +48,7 @@ public class JsonRequestHelper {
             // Showing progress dialog
 
             progressDialog = new ProgressDialog(context);
-            progressDialog.setMessage("Please wait...");
+            progressDialog.setMessage(context.getString(R.string.wait));
             progressDialog.setCancelable(false);
             progressDialog.show();
         }
@@ -65,7 +68,11 @@ public class JsonRequestHelper {
             jsonData = result;
 
             // Send message to caller to notify finishing task
-            handler.sendEmptyMessage(0);
+            if (jsonData.length() != 0) {
+                handler.sendEmptyMessage(0);    // Success
+            } else {
+                handler.sendEmptyMessage(1);    // Fail
+            }
         }
     }
 
@@ -73,22 +80,24 @@ public class JsonRequestHelper {
         StringBuffer chaine = new StringBuffer("");
         try {
             URL url = new URL(urlString);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            HttpURLConnection connection = (HttpURLConnection) url
+                    .openConnection();
             connection.setRequestProperty("User-Agent", "");
             connection.setRequestMethod("GET");
             connection.setDoInput(true);
             connection.connect();
 
             InputStream inputStream = connection.getInputStream();
-            BufferedReader rd = new BufferedReader(new InputStreamReader(inputStream));
+            BufferedReader rd = new BufferedReader(new InputStreamReader
+                    (inputStream));
             String line = "";
             while ((line = rd.readLine()) != null) {
                 chaine.append(line);
             }
         } catch (IOException e) {
-            Log.d(CLASS_NAME, e.getMessage());
+            Log.d(CLASS_NAME, "IOException " + e.getMessage());
         } catch (Exception e) {
-            Log.d(CLASS_NAME, e.getMessage());
+            Log.d(CLASS_NAME, "Exception " + e.getMessage());
         }
 
         return chaine.toString();

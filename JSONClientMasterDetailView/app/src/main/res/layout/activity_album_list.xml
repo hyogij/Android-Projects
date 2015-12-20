@@ -12,12 +12,6 @@
         android:layout_height="fill_parent"
         android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/search"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:singleLine="true"/>
-
         <FrameLayout
             android:id="@+id/frameLayout"
             android:layout_width="match_parent"

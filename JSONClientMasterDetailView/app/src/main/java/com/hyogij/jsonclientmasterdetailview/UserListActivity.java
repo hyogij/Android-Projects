@@ -16,19 +16,20 @@ import com.google.gson.GsonBuilder;
 import com.hyogij.jsonclientmasterdetailview.Const.Constants;
 import com.hyogij.jsonclientmasterdetailview.JsonDatas.User;
 import com.hyogij.jsonclientmasterdetailview.JsonRequestUtils.JsonRequestHelper;
-import com.hyogij.jsonclientmasterdetailview.RecyclerViewAdapter.UserItemRecycleViewAdapter;
+import com.hyogij.jsonclientmasterdetailview.RecyclerViewAdapter
+        .UserItemRecycleViewAdapter;
+import com.hyogij.jsonclientmasterdetailview.Util.Utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
 
 /**
- * An activity representing a list of Users. This activity
- * has different presentations for handset and tablet-size devices. On
- * handsets, the activity presents a list of items, which when touched,
- * lead to a {@link AlbumListActivity} representing
- * item details. On tablets, the activity presents the list of items and
- * item details side-by-side using two vertical panes.
+ * An activity representing a list of Users. This activity is only used
+ * narrow width devices. The activity presents a list of Users, which when
+ * album button is clicked, lead to a {@link AlbumListActivity} representing
+ * a list of Albums. And when post button is clicked, lead to a {@link
+ * PostListActivity} representing a list of Posts.
  */
 public class UserListActivity extends AppCompatActivity {
     private static final String CLASS_NAME = UserListActivity.class
@@ -60,16 +61,47 @@ public class UserListActivity extends AppCompatActivity {
         if (findViewById(R.id.user_detail_container) != null) {
             // The detail container view will be present only in the
             // large-screen layouts (res/values-w900dp).
-            // If this view is present, then the
-            // activity should be in two-pane mode.
             twoPane = true;
         }
 
         // Search text in the listview
         editSearch = (EditText) findViewById(R.id.search);
-        addSearchFilter();
 
         requestJSON();
+    }
+
+    private void requestJSON() {
+        jsonRequestHelper = new JsonRequestHelper(this, handler, Constants
+                .USER_REQUEST_URL);
+    }
+
+    // Handler to wait receiving json data
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 0:
+                    GsonBuilder gsonBuilder = new GsonBuilder();
+                    Gson gson = gsonBuilder.create();
+                    User[] array = gson.fromJson(jsonRequestHelper
+                            .getJsonData(), User[].class);
+                    arrayList = new ArrayList<User>(Arrays.asList(array));
+                    onRefreshList();
+                    addSearchFilter();
+                    break;
+                case 1:
+                    Utils.showToast(getApplicationContext(), getString(R
+                            .string.json_error));
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
+    private void onRefreshList() {
+        adapter = new UserItemRecycleViewAdapter(this, arrayList, twoPane);
+        ((RecyclerView) recyclerView).setAdapter(adapter);
     }
 
     private void addSearchFilter() {
@@ -77,7 +109,8 @@ public class UserListActivity extends AppCompatActivity {
         editSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable arg0) {
-                String text = editSearch.getText().toString().toLowerCase(Locale.getDefault());
+                String text = editSearch.getText().toString().toLowerCase
+                        (Locale.getDefault());
                 adapter.filter(text);
             }
 
@@ -91,32 +124,5 @@ public class UserListActivity extends AppCompatActivity {
                                       int arg3) {
             }
         });
-    }
-
-    private void requestJSON() {
-        jsonRequestHelper = new JsonRequestHelper(this, handler, Constants.USER_REQUEST_URL);
-    }
-
-    // Handler to wait receiving json data
-    Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case 0:
-                    GsonBuilder gsonBuilder = new GsonBuilder();
-                    Gson gson = gsonBuilder.create();
-                    User[] array = gson.fromJson(jsonRequestHelper.getJsonData(), User[].class);
-                    arrayList = new ArrayList<User>(Arrays.asList(array));
-                    onRefreshList();
-                    break;
-                default:
-                    break;
-            }
-        }
-    };
-
-    private void onRefreshList() {
-        adapter = new UserItemRecycleViewAdapter(this, arrayList, twoPane);
-        ((RecyclerView) recyclerView).setAdapter(adapter);
     }
 }

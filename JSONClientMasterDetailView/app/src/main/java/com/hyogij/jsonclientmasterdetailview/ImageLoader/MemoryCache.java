@@ -1,4 +1,4 @@
-package com.hyogij.jsonclientmasterdetailview.ImageLoaderUtils;
+package com.hyogij.jsonclientmasterdetailview.ImageLoader;
 
 import android.graphics.Bitmap;
 import android.util.Log;
@@ -9,7 +9,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class MemoryCache {
-    private static final String CLASS_NAME = MemoryCache.class.getCanonicalName();
+    private static final String CLASS_NAME = MemoryCache.class
+            .getCanonicalName();
 
     private Map<String, Bitmap> cache = Collections.synchronizedMap(
             new LinkedHashMap<String, Bitmap>(10, 1.5f, true));//Last
@@ -24,7 +25,8 @@ public class MemoryCache {
 
     public void setLimit(long new_limit) {
         limit = new_limit;
-        Log.d(CLASS_NAME, "MemoryCache will use up to " + limit / 1024. / 1024. +
+        Log.d(CLASS_NAME, "MemoryCache will use up to " + limit / 1024. /
+                1024. +
                 "MB");
     }
 

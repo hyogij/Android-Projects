@@ -5,12 +5,18 @@
                                                  android:layout_width="match_parent"
                                                  android:layout_height="match_parent"
                                                  android:fitsSystemWindows="true"
-                                                 tools:context=".PostListActivity">
+                                                 tools:context=".PictureListActivity">
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/search"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"/>
 
         <FrameLayout
             android:id="@+id/frameLayout"
@@ -18,8 +24,18 @@
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <include
-                layout="@layout/post_list"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/picture_list"
+                android:name="com.hyogij.jsonclientmasterdetailview.PictureListFragment"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                app:layoutManager="LinearLayoutManager"
+                tools:context="com.hyogij.jsonclientmasterdetailview.PictureListActivity"
+                tools:listitem="@layout/picture_list_content"/>
         </FrameLayout>
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

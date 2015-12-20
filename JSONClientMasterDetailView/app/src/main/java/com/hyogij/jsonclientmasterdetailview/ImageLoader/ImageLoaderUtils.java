@@ -1,4 +1,4 @@
-package com.hyogij.jsonclientmasterdetailview.ImageLoaderUtils;
+package com.hyogij.jsonclientmasterdetailview.ImageLoader;
 
 import android.util.Log;
 
@@ -7,8 +7,12 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class Utils {
-    private static final String CLASS_NAME = Utils.class.getCanonicalName();
+/**
+ * An utility class for Image Loaders.
+ */
+public class ImageLoaderUtils {
+    private static final String CLASS_NAME = ImageLoaderUtils.class
+            .getCanonicalName();
 
     public static String getOriginalUrl(String url) {
         String location = null;

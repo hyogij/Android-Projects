@@ -1,7 +1,7 @@
 package com.hyogij.jsonclientmasterdetailview.JsonDatas;
 
 /**
- * Created by hyogij on 15. 12. 15..
+ * A class for Picture data.
  */
 public class Picture {
     private String albumId = null;
@@ -10,7 +10,8 @@ public class Picture {
     private String url = null;
     private String thumbnailUrl = null;
 
-    public Picture(String albumId, String id, String title, String url, String thumbnailUrl) {
+    public Picture(String albumId, String id, String title, String url,
+                   String thumbnailUrl) {
         this.albumId = albumId;
         this.id = id;
         this.title = title;
