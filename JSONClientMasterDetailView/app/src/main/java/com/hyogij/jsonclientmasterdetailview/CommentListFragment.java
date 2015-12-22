@@ -1,8 +1,6 @@
 package com.hyogij.jsonclientmasterdetailview;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -13,14 +11,17 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.hyogij.jsonclientmasterdetailview.Const.Constants;
 import com.hyogij.jsonclientmasterdetailview.JsonDatas.Comment;
-import com.hyogij.jsonclientmasterdetailview.JsonRequestUtils.JsonRequestHelper;
-import com.hyogij.jsonclientmasterdetailview.RecyclerViewAdapter
-        .CommentItemRecycleViewAdapter;
+import com.hyogij.jsonclientmasterdetailview.RecyclerViewAdapter.CommentItemRecycleViewAdapter;
 import com.hyogij.jsonclientmasterdetailview.Util.Utils;
+import com.hyogij.jsonclientmasterdetailview.Volley.VolleyHelper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,8 +34,6 @@ public class CommentListFragment extends Fragment {
     private static final String CLASS_NAME = CommentListFragment.class
             .getCanonicalName();
 
-    private JsonRequestHelper jsonRequestHelper = null;
-
     private ArrayAdapter<Comment> arrayAdapter = null;
     private ArrayList<Comment> arrayList = null;
     private CommentItemRecycleViewAdapter adapter = null;
@@ -43,6 +42,7 @@ public class CommentListFragment extends Fragment {
     private EditText editSearch = null;
 
     private StringBuilder url = null;
+    private StringRequest stringRequest = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,6 +61,7 @@ public class CommentListFragment extends Fragment {
             url = new StringBuilder(Constants.COMMENT_REQUEST_URL);
             url.append(postId);
 
+            createStringRequest();
             requestJSON();
 
             // Search text in the listview
@@ -71,32 +72,37 @@ public class CommentListFragment extends Fragment {
     }
 
     private void requestJSON() {
-        jsonRequestHelper = new JsonRequestHelper(getActivity(), handler, url
-                .toString
-                        ());
+        Utils.showProgresDialog(getActivity());
+        VolleyHelper.getInstance(getActivity()).addToRequestQueue(stringRequest);
     }
 
-    // Handler to wait receiving json data
-    Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case 0:
-                    GsonBuilder gsonBuilder = new GsonBuilder();
-                    Gson gson = gsonBuilder.create();
-                    Comment[] array = gson.fromJson(jsonRequestHelper
-                            .getJsonData(), Comment[].class);
-                    arrayList = new ArrayList<Comment>(Arrays.asList(array));
-                    onRefreshList();
-                    break;
-                case 1:
-                    Utils.showToast(getContext(), getString(R
-                            .string.json_error));
-                default:
-                    break;
+    private void createStringRequest() {
+        // Request a string response from the provided URL
+        stringRequest = new StringRequest(Request.Method.GET, url
+                .toString
+                        (),
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Utils.hideProgresDialog();
+
+                        GsonBuilder gsonBuilder = new GsonBuilder();
+                        Gson gson = gsonBuilder.create();
+                        Comment[] array = gson.fromJson(response, Comment[].class);
+                        arrayList = new ArrayList<Comment>(Arrays.asList(array));
+                        onRefreshList();
+                        addSearchFilter();
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Utils.hideProgresDialog();
+
+                Utils.showToast(getActivity(), getString(R
+                        .string.json_error));
             }
-        }
-    };
+        });
+    }
 
     private void onRefreshList() {
         // Initialize and set the list adapter

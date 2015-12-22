@@ -2,8 +2,6 @@ package com.hyogij.jsonclientmasterdetailview;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -13,14 +11,17 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.hyogij.jsonclientmasterdetailview.Const.Constants;
 import com.hyogij.jsonclientmasterdetailview.JsonDatas.Album;
-import com.hyogij.jsonclientmasterdetailview.JsonRequestUtils.JsonRequestHelper;
-import com.hyogij.jsonclientmasterdetailview.RecyclerViewAdapter
-        .AlbumItemRecycleViewAdapter;
+import com.hyogij.jsonclientmasterdetailview.RecyclerViewAdapter.AlbumItemRecycleViewAdapter;
 import com.hyogij.jsonclientmasterdetailview.Util.Utils;
+import com.hyogij.jsonclientmasterdetailview.Volley.VolleyHelper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,8 +45,6 @@ public class AlbumListActivity extends AppCompatActivity {
      */
     private boolean twoPane;
 
-    private JsonRequestHelper jsonRequestHelper = null;
-
     private ArrayAdapter<Album> arrayAdapter = null;
     private ArrayList<Album> arrayList = null;
     private AlbumItemRecycleViewAdapter adapter = null;
@@ -54,6 +53,7 @@ public class AlbumListActivity extends AppCompatActivity {
     private EditText editSearch = null;
 
     private StringBuilder url = null;
+    private StringRequest stringRequest = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +84,7 @@ public class AlbumListActivity extends AppCompatActivity {
         // Search text in the listview
         editSearch = (EditText) findViewById(R.id.search);
 
+        createStringRequest();
         requestJSON();
     }
 
@@ -98,32 +99,36 @@ public class AlbumListActivity extends AppCompatActivity {
     }
 
     private void requestJSON() {
-        jsonRequestHelper = new JsonRequestHelper(this, handler, url.toString
-                ());
+        Utils.showProgresDialog(this);
+        VolleyHelper.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
     }
 
-    // Handler to wait receiving json data
-    Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case 0:
-                    GsonBuilder gsonBuilder = new GsonBuilder();
-                    Gson gson = gsonBuilder.create();
-                    Album[] array = gson.fromJson(jsonRequestHelper
-                            .getJsonData(), Album[].class);
-                    arrayList = new ArrayList<Album>(Arrays.asList(array));
-                    onRefreshList();
-                    addSearchFilter();
-                    break;
-                case 1:
-                    Utils.showToast(getApplicationContext(), getString(R
-                            .string.json_error));
-                default:
-                    break;
+    private void createStringRequest() {
+        // Request a string response from the provided URL
+        stringRequest = new StringRequest(Request.Method.GET, url.toString
+                (),
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Utils.hideProgresDialog();
+
+                        GsonBuilder gsonBuilder = new GsonBuilder();
+                        Gson gson = gsonBuilder.create();
+                        Album[] array = gson.fromJson(response, Album[].class);
+                        arrayList = new ArrayList<Album>(Arrays.asList(array));
+                        onRefreshList();
+                        addSearchFilter();
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Utils.hideProgresDialog();
+
+                Utils.showToast(getApplicationContext(), getString(R
+                        .string.json_error));
             }
-        }
-    };
+        });
+    }
 
     private void onRefreshList() {
         adapter = new AlbumItemRecycleViewAdapter(this, arrayList, twoPane);
