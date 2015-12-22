@@ -2,18 +2,23 @@ package com.hyogij.jsonclientmasterdetailview.RecyclerViewAdapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
 import com.hyogij.jsonclientmasterdetailview.Const.Constants;
-import com.hyogij.jsonclientmasterdetailview.ImageLoader.ImageLoader;
 import com.hyogij.jsonclientmasterdetailview.JsonDatas.Picture;
 import com.hyogij.jsonclientmasterdetailview.PictureViewActivity;
 import com.hyogij.jsonclientmasterdetailview.R;
+import com.hyogij.jsonclientmasterdetailview.Volley.VolleyHelper;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -35,7 +40,6 @@ public class PictureItemRecycleViewAdapter extends RecyclerView
      * device.
      */
     private boolean twoPane;
-    public ImageLoader imageLoader = null;
 
     public PictureItemRecycleViewAdapter(Context context, ArrayList<Picture>
             items, boolean twoPane) {
@@ -45,7 +49,6 @@ public class PictureItemRecycleViewAdapter extends RecyclerView
         this.list = new ArrayList<Picture>();
         this.list.addAll(items);
         this.twoPane = twoPane;
-        imageLoader = new ImageLoader(context.getApplicationContext());
     }
 
     @Override
@@ -65,7 +68,22 @@ public class PictureItemRecycleViewAdapter extends RecyclerView
         viewHolder.id.setText(context.getString(R.string.id) + picture.getId());
         viewHolder.title.setText(context.getString(R.string.title) + picture
                 .getTitle());
-        imageLoader.DisplayImage(picture.getThumbnailUrl(), viewHolder.image);
+
+        // Retrieves an image specified by the URL, displays it in the UI.
+        ImageRequest imageRequest = new ImageRequest(picture.getThumbnailUrl(),
+                new Response.Listener<Bitmap>() {
+                    @Override
+                    public void onResponse(Bitmap bitmap) {
+                        viewHolder.image.setImageBitmap(bitmap);
+                    }
+                }, 0, 0, ImageView.ScaleType.CENTER_CROP, null,
+                new Response.ErrorListener() {
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d(CLASS_NAME, error.getMessage());
+                    }
+                });
+
+        VolleyHelper.getInstance(context).addToRequestQueue(imageRequest);
 
         viewHolder.view.setOnClickListener(new View.OnClickListener() {
             @Override
