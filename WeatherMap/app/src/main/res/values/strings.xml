@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">WeatherMap</string>
+
+    <string name="close">Close</string>
+    <string name="setting">Setting</string>
+    <string name="cancel">Cancel</string>
+
+    <string name="wait">Request weather information...</string>
+
+    <string name="gps_dialog_content">"Your GPS module is disabled. Would you like to enable it?"</string>
+
+    <string name="error_json">Error occurred during request json..</string>
+    <string name="error_weather">We could not get a weather information of&#160;</string>
+    <string name="error_geocoding">Error occurred during request cityname..</string>
+
+    <string name="error_location_provider_outofservice">Status Changed: Out of Service </string>
+    <string name="error_location_provider_unavailable">Status Changed: Temporarily Unavailable</string>
+    <string name="error_location_provider_available">Status Changed: Available</string>
+</resources>
