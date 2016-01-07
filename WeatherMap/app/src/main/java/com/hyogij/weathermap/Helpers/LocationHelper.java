@@ -132,11 +132,11 @@ public class LocationHelper extends Service implements LocationListener {
                         .error_location_provider_outofservice), Toast.LENGTH_SHORT).show();
                 break;
             case LocationProvider.TEMPORARILY_UNAVAILABLE:
-                Toast.makeText(this, context.getString(R.string
+                Toast.makeText(context, context.getString(R.string
                         .error_location_provider_unavailable), Toast.LENGTH_SHORT).show();
                 break;
             case LocationProvider.AVAILABLE:
-                Toast.makeText(this, context.getString(R.string
+                Toast.makeText(context, context.getString(R.string
                         .error_location_provider_available), Toast.LENGTH_SHORT).show();
                 break;
         }

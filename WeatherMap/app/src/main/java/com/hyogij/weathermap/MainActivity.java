@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 Weather weather = markers.get(marker.getId());
 
                 // Show the weather information using received html string
-                UiHelper.showAlertDialog(MainActivity.this, weather);
+                UiHelper.showAlertDialog(getParent(), weather);
                 return true;
             }
         });
@@ -127,7 +127,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void requestJSON() {
-        UiHelper.showProgressDialog(this);
+        if(isFinishing()) {
+            UiHelper.showProgressDialog(getParent());
+        }
         VolleyHelper.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);
     }
 
@@ -162,7 +164,9 @@ public class MainActivity extends AppCompatActivity {
         addMarker();
         setBackgroundColor();
 
-        UiHelper.showAlertDialog(MainActivity.this, currentWeather);
+        if(isFinishing()) {
+            UiHelper.showAlertDialog(getParent(), currentWeather);
+        }
     }
 
     private void addMarker() {
