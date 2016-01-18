@@ -37,9 +37,9 @@ public class TransactionsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         transactions = (ArrayList<Transaction>) intent
                 .getSerializableExtra(Constants
-                        .TAG_PRODUCTS);
+                        .TAG_TRANSCATIONS);
 
-        String sku = intent.getStringExtra(Constants.TAG_TRANSACTION);
+        String sku = intent.getStringExtra(Constants.TAG_SKU);
         setTitle(getString(R.string.transactions_title) + sku);
 
         setTotalAmount();

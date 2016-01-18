@@ -138,9 +138,9 @@ public class ProductsActivity extends AppCompatActivity {
 
             Intent transactionsIntent = new Intent(ProductsActivity
                     .this, TransactionsActivity.class);
-            transactionsIntent.putExtra(Constants.TAG_PRODUCTS, products
+            transactionsIntent.putExtra(Constants.TAG_TRANSCATIONS, products
                     .getTransactions());
-            transactionsIntent.putExtra(Constants.TAG_TRANSACTION, products
+            transactionsIntent.putExtra(Constants.TAG_SKU, products
                     .getSku());
 
             startActivity(transactionsIntent);
