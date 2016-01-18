@@ -73,11 +73,18 @@ public class ProductsActivity extends AppCompatActivity {
 
     private ArrayList<Transaction> exchangeCurrency(ArrayList<Transaction>
                                                             value) {
+        // Convert all currencies to GBP to reduce converting computations
+        HashMap<String, Double> weightMap = new HashMap<String, Double>();
+        for (String key : currencyMap.keySet()) {
+            double weight = BellmanFord.BellmanFordAlgorithm(graph, currencyMap.get(key),
+                    currencyMap.get(Constants.GBP_CURRENCY));
+            weightMap.put(key, weight);
+        }
+
+        // Convert all transaction currencies to GBP using calculated weight
         for (int i = 0; i < value.size(); i++) {
             Transaction transaction = value.get(i);
-            double weight = BellmanFord.BellmanFordAlgorithm(graph, currencyMap
-                            .get(transaction.getCurrency()),
-                    currencyMap.get(Constants.GBP_CURRENCY));
+            double weight = weightMap.get(transaction.getCurrency());
             transaction.setGbpValue(transaction.getAmount() * weight);
         }
         return value;
