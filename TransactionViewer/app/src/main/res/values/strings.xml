@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">TransactionViewer</string>
+    <string name="products">Products</string>
+    <string name="transactions">&#160;transactions</string>
+    <string name="transactions_title">Transactions for&#160;</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="total">&#160;&#160;&#160;Total :&#160;</string>
+</resources>
