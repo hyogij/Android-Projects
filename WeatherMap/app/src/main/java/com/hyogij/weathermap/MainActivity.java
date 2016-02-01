@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 Weather weather = markers.get(marker.getId());
 
                 // Show the weather information using received html string
-                UiHelper.showAlertDialog(getParent(), weather);
+                UiHelper.showAlertDialog(MainActivity.this, weather);
                 return true;
             }
         });
