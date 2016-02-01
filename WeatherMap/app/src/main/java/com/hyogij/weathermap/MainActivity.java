@@ -127,9 +127,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void requestJSON() {
-        if(isFinishing()) {
-            UiHelper.showProgressDialog(getParent());
-        }
+        UiHelper.showProgressDialog(MainActivity.this);
         VolleyHelper.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);
     }
 
@@ -163,10 +161,7 @@ public class MainActivity extends AppCompatActivity {
     private void updateWeatherInformation() {
         addMarker();
         setBackgroundColor();
-
-        if(isFinishing()) {
-            UiHelper.showAlertDialog(getParent(), currentWeather);
-        }
+        UiHelper.showAlertDialog(MainActivity.this, currentWeather);
     }
 
     private void addMarker() {
