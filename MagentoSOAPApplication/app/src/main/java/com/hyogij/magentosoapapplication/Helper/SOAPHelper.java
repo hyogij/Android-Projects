@@ -22,7 +22,7 @@ public class SOAPHelper {
             .getCanonicalName();
 
     private static final int TIME_OUT_MILLISECOND = 30000;
-    private static final int REQUEST_PRODUCT_COUNT = 10;
+    private static final int REQUEST_PRODUCT_COUNT = 18;
 
     private static SoapSerializationEnvelope env = null;
     private static HttpTransportSE androidHttpTransport = null;
@@ -177,7 +177,6 @@ public class SOAPHelper {
             androidHttpTransport.call("", env);
 
             Object result = env.getResponse();
-
             SoapObject response = (SoapObject) result;
             for (int i = 0; i < response.getPropertyCount(); i++) {
                 SoapObject property = (SoapObject) response.getProperty(i);

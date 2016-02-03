@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListView;
+import android.widget.GridView;
 
 import com.hyogij.magentosoapapplication.Adapters.ProductAdapter;
 import com.hyogij.magentosoapapplication.Datas.Product;
@@ -21,14 +21,14 @@ public class MainActivity extends AppCompatActivity {
 
     private ArrayList<Product> items = null;
     private ProductAdapter productAdapter = null;
-    private ListView listView = null;
+    private GridView gridView = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        listView = (ListView) findViewById(R.id.list);
+        gridView = (GridView) findViewById(R.id.gridView);
 
         onProductList();
     }
@@ -68,8 +68,8 @@ public class MainActivity extends AppCompatActivity {
     private void onRefreshList() {
         productAdapter = new ProductAdapter(this, R.layout.product_item,
                 items);
-        listView.setAdapter(productAdapter);
-        listView.setOnItemClickListener(onClickListItem);
+        gridView.setAdapter(productAdapter);
+        gridView.setOnItemClickListener(onClickListItem);
     }
 
     private AdapterView.OnItemClickListener onClickListItem = new AdapterView
