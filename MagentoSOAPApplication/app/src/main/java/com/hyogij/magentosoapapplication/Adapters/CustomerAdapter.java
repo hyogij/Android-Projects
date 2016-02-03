@@ -13,7 +13,7 @@ import com.hyogij.magentosoapapplication.R;
 import java.util.ArrayList;
 
 /**
- * Created by hyogij on 16. 2. 2..
+ * An adapter class to display customer item.
  */
 public class CustomerAdapter extends ArrayAdapter<Customer> {
     private static final String CLASS_NAME = CustomerAdapter.class
@@ -40,6 +40,7 @@ public class CustomerAdapter extends ArrayAdapter<Customer> {
             viewHolder = new CustomerViewHolder();
             viewHolder.created_at = (TextView) convertView.findViewById(R.id.created_at);
             viewHolder.email = (TextView) convertView.findViewById(R.id.email);
+
 
             convertView.setTag(viewHolder);
         } else {

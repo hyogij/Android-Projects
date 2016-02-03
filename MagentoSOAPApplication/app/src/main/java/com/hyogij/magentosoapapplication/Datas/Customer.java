@@ -3,7 +3,7 @@ package com.hyogij.magentosoapapplication.Datas;
 import org.ksoap2.serialization.SoapObject;
 
 /**
- * Created by hyogij on 16. 2. 2..
+ * A class for Customer data.
  */
 public class Customer {
     private String customer_id = null;

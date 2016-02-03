@@ -5,15 +5,20 @@
               android:orientation="vertical"
               android:padding="2dp">
 
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
     <TextView
-        android:id="@+id/created_at"
+        android:id="@+id/name"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textSize="20dp"/>
 
     <TextView
-        android:id="@+id/email"
+        android:id="@+id/type"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/darker_gray"/>
+        android:textSize="20dp"/>
 </LinearLayout>
