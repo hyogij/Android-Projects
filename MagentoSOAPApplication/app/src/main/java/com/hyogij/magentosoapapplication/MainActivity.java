@@ -8,10 +8,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
-import com.hyogij.magentosoapapplication.Adapters.ProductAdapter;
-import com.hyogij.magentosoapapplication.Datas.Product;
-import com.hyogij.magentosoapapplication.Helper.SOAPHelper;
-import com.hyogij.magentosoapapplication.Helper.UiHelpers;
+import com.hyogij.magentosoapapplication.adapters.ProductAdapter;
+import com.hyogij.magentosoapapplication.datas.Product;
+import com.hyogij.magentosoapapplication.helper.SOAPHelper;
+import com.hyogij.magentosoapapplication.helper.UiHelpers;
 
 import java.util.ArrayList;
 

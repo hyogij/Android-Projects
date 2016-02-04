@@ -1,10 +1,10 @@
-package com.hyogij.magentosoapapplication.Helper;
+package com.hyogij.magentosoapapplication.helper;
 
 import android.util.Log;
 
 import com.hyogij.magentosoapapplication.Const;
-import com.hyogij.magentosoapapplication.Datas.Customer;
-import com.hyogij.magentosoapapplication.Datas.Product;
+import com.hyogij.magentosoapapplication.datas.Customer;
+import com.hyogij.magentosoapapplication.datas.Product;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;

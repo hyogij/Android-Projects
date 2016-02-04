@@ -1,4 +1,4 @@
-package com.hyogij.magentosoapapplication.Adapters;
+package com.hyogij.magentosoapapplication.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.hyogij.magentosoapapplication.Datas.Customer;
+import com.hyogij.magentosoapapplication.datas.Customer;
 import com.hyogij.magentosoapapplication.R;
 
 import java.util.ArrayList;

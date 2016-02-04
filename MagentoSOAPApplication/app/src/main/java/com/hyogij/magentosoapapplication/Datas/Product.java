@@ -1,4 +1,4 @@
-package com.hyogij.magentosoapapplication.Datas;
+package com.hyogij.magentosoapapplication.datas;
 
 import org.ksoap2.serialization.SoapObject;
 

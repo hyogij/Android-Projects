@@ -1,4 +1,4 @@
-package com.hyogij.magentosoapapplication.Helper;
+package com.hyogij.magentosoapapplication.helper;
 
 import android.app.ProgressDialog;
 import android.content.Context;

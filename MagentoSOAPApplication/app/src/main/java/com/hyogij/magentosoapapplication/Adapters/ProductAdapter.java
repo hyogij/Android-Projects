@@ -1,4 +1,4 @@
-package com.hyogij.magentosoapapplication.Adapters;
+package com.hyogij.magentosoapapplication.adapters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -13,8 +13,8 @@ import android.widget.TextView;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
-import com.hyogij.magentosoapapplication.Datas.Product;
-import com.hyogij.magentosoapapplication.Helper.VolleyHelper;
+import com.hyogij.magentosoapapplication.datas.Product;
+import com.hyogij.magentosoapapplication.helper.VolleyHelper;
 import com.hyogij.magentosoapapplication.R;
 
 import java.util.ArrayList;
