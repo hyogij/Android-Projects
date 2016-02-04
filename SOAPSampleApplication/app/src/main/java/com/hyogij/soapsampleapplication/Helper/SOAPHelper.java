@@ -1,4 +1,4 @@
-package com.hyogij.soapsampleapplication.Helper;
+package com.hyogij.soapsampleapplication.helper;
 
 import android.util.Log;
 

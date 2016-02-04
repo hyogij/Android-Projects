@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.hyogij.soapsampleapplication.Helper.SOAPHelper;
+import com.hyogij.soapsampleapplication.helper.SOAPHelper;
 
 import org.ksoap2.serialization.SoapPrimitive;
 
