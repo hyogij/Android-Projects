@@ -1,9 +1,9 @@
-package com.hyogij.weathermap.Helpers;
+package com.hyogij.weathermap.helpers;
 
 import android.util.Log;
 
-import com.hyogij.weathermap.JSONDatas.Forecast;
-import com.hyogij.weathermap.JSONDatas.Weather;
+import com.hyogij.weathermap.datas.Forecast;
+import com.hyogij.weathermap.datas.Weather;
 
 import org.json.JSONArray;
 import org.json.JSONException;

@@ -21,12 +21,12 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.hyogij.weathermap.Helpers.JSONHelper;
-import com.hyogij.weathermap.Helpers.LocationHelper;
-import com.hyogij.weathermap.Helpers.UiHelper;
-import com.hyogij.weathermap.Helpers.Utils;
-import com.hyogij.weathermap.JSONDatas.Weather;
-import com.hyogij.weathermap.Volley.VolleyHelper;
+import com.hyogij.weathermap.helpers.JSONHelper;
+import com.hyogij.weathermap.helpers.LocationHelper;
+import com.hyogij.weathermap.helpers.UiHelper;
+import com.hyogij.weathermap.helpers.Utils;
+import com.hyogij.weathermap.datas.Weather;
+import com.hyogij.weathermap.volley.VolleyHelper;
 
 import org.json.JSONObject;
 

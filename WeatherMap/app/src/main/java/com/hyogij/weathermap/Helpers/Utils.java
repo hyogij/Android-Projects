@@ -1,4 +1,4 @@
-package com.hyogij.weathermap.Helpers;
+package com.hyogij.weathermap.helpers;
 
 import android.content.Context;
 import android.location.Address;
@@ -6,7 +6,7 @@ import android.location.Geocoder;
 import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
-import com.hyogij.weathermap.Constant.Constant;
+import com.hyogij.weathermap.constant.Constant;
 import com.hyogij.weathermap.R;
 
 import java.io.IOException;

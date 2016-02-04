@@ -1,4 +1,4 @@
-package com.hyogij.weathermap.Helpers;
+package com.hyogij.weathermap.helpers;
 
 import android.Manifest;
 import android.app.AlertDialog;

@@ -1,4 +1,4 @@
-package com.hyogij.weathermap.JSONDatas;
+package com.hyogij.weathermap.datas;
 
 
 /**

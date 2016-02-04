@@ -1,4 +1,4 @@
-package com.hyogij.weathermap.Helpers;
+package com.hyogij.weathermap.helpers;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -8,7 +8,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
-import com.hyogij.weathermap.JSONDatas.Weather;
+import com.hyogij.weathermap.datas.Weather;
 import com.hyogij.weathermap.R;
 
 /**

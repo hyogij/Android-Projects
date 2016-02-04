@@ -1,4 +1,4 @@
-package com.hyogij.weathermap.Constant;
+package com.hyogij.weathermap.constant;
 
 /**
  * A class for constant variables
