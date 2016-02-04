@@ -1,4 +1,4 @@
-package com.hyogij.jsonclientmasterdetailview.Const;
+package com.hyogij.jsonclientmasterdetailview;
 
 /**
  * A class for constant variables.

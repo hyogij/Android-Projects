@@ -17,11 +17,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.hyogij.jsonclientmasterdetailview.Const.Constants;
-import com.hyogij.jsonclientmasterdetailview.JsonDatas.Picture;
-import com.hyogij.jsonclientmasterdetailview.RecyclerViewAdapter.PictureItemRecycleViewAdapter;
-import com.hyogij.jsonclientmasterdetailview.Util.Utils;
-import com.hyogij.jsonclientmasterdetailview.Volley.VolleyHelper;
+import com.hyogij.jsonclientmasterdetailview.json.Picture;
+import com.hyogij.jsonclientmasterdetailview.adapter.PictureItemRecycleViewAdapter;
+import com.hyogij.jsonclientmasterdetailview.util.Utils;
+import com.hyogij.jsonclientmasterdetailview.volley.VolleyHelper;
 
 import java.util.ArrayList;
 import java.util.Arrays;

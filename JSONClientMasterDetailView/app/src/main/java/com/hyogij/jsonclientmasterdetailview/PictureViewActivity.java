@@ -11,9 +11,8 @@ import android.widget.ImageView;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
-import com.hyogij.jsonclientmasterdetailview.Const.Constants;
-import com.hyogij.jsonclientmasterdetailview.Util.Utils;
-import com.hyogij.jsonclientmasterdetailview.Volley.VolleyHelper;
+import com.hyogij.jsonclientmasterdetailview.util.Utils;
+import com.hyogij.jsonclientmasterdetailview.volley.VolleyHelper;
 
 /**
  * An activity representing a single picture detail screen.

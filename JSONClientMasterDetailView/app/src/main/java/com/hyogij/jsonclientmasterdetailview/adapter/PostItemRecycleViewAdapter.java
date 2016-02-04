@@ -1,4 +1,4 @@
-package com.hyogij.jsonclientmasterdetailview.RecyclerViewAdapter;
+package com.hyogij.jsonclientmasterdetailview.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,8 +12,8 @@ import android.widget.TextView;
 
 import com.hyogij.jsonclientmasterdetailview.CommentListActivity;
 import com.hyogij.jsonclientmasterdetailview.CommentListFragment;
-import com.hyogij.jsonclientmasterdetailview.Const.Constants;
-import com.hyogij.jsonclientmasterdetailview.JsonDatas.Post;
+import com.hyogij.jsonclientmasterdetailview.Constants;
+import com.hyogij.jsonclientmasterdetailview.json.Post;
 import com.hyogij.jsonclientmasterdetailview.R;
 
 import java.util.ArrayList;

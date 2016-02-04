@@ -1,17 +1,19 @@
-package com.hyogij.jsonclientmasterdetailview.JsonDatas;
+package com.hyogij.jsonclientmasterdetailview.json;
 
 /**
- * A class for Album data.
+ * A class for Post data.
  */
-public class Album {
+public class Post {
     private String userId = null;
     private String id = null;
     private String title = null;
+    private String body = null;
 
-    public Album(String userId, String id, String title) {
+    public Post(String userId, String id, String title, String body) {
         this.userId = userId;
         this.id = id;
         this.title = title;
+        this.body = body;
     }
 
     public String getUserId() {
@@ -38,9 +40,16 @@ public class Album {
         this.title = title;
     }
 
+    public String getBody() {
+        return body;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
+
     @Override
     public String toString() {
-        // Ignore other fields
-        return title;
+        return title + ' ' + body;
     }
 }

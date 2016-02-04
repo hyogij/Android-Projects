@@ -1,4 +1,4 @@
-package com.hyogij.jsonclientmasterdetailview.JsonDatas;
+package com.hyogij.jsonclientmasterdetailview.json;
 
 /**
  * A class for Comment data.

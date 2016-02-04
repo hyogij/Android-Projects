@@ -1,4 +1,4 @@
-package com.hyogij.jsonclientmasterdetailview.RecyclerViewAdapter;
+package com.hyogij.jsonclientmasterdetailview.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.hyogij.jsonclientmasterdetailview.JsonDatas.Comment;
+import com.hyogij.jsonclientmasterdetailview.json.Comment;
 import com.hyogij.jsonclientmasterdetailview.R;
 
 import java.util.ArrayList;

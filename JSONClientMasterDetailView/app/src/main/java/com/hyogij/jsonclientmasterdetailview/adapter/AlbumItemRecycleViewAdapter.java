@@ -1,4 +1,4 @@
-package com.hyogij.jsonclientmasterdetailview.RecyclerViewAdapter;
+package com.hyogij.jsonclientmasterdetailview.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,8 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.hyogij.jsonclientmasterdetailview.Const.Constants;
-import com.hyogij.jsonclientmasterdetailview.JsonDatas.Album;
+import com.hyogij.jsonclientmasterdetailview.Constants;
+import com.hyogij.jsonclientmasterdetailview.json.Album;
 import com.hyogij.jsonclientmasterdetailview.PictureListActivity;
 import com.hyogij.jsonclientmasterdetailview.PictureListFragment;
 import com.hyogij.jsonclientmasterdetailview.R;

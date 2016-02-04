@@ -1,4 +1,4 @@
-package com.hyogij.jsonclientmasterdetailview.RecyclerViewAdapter;
+package com.hyogij.jsonclientmasterdetailview.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,11 +14,11 @@ import android.widget.TextView;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
-import com.hyogij.jsonclientmasterdetailview.Const.Constants;
-import com.hyogij.jsonclientmasterdetailview.JsonDatas.Picture;
+import com.hyogij.jsonclientmasterdetailview.Constants;
+import com.hyogij.jsonclientmasterdetailview.json.Picture;
 import com.hyogij.jsonclientmasterdetailview.PictureViewActivity;
 import com.hyogij.jsonclientmasterdetailview.R;
-import com.hyogij.jsonclientmasterdetailview.Volley.VolleyHelper;
+import com.hyogij.jsonclientmasterdetailview.volley.VolleyHelper;
 
 import java.util.ArrayList;
 import java.util.Locale;
