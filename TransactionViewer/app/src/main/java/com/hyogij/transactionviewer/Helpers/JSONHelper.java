@@ -1,10 +1,10 @@
-package com.hyogij.transactionviewer.Helpers;
+package com.hyogij.transactionviewer.helpers;
 
 import android.content.Context;
 import android.util.Log;
 
-import com.hyogij.transactionviewer.Datas.Rate;
-import com.hyogij.transactionviewer.Datas.Transaction;
+import com.hyogij.transactionviewer.datas.Rate;
+import com.hyogij.transactionviewer.datas.Transaction;
 
 import org.json.JSONArray;
 import org.json.JSONException;

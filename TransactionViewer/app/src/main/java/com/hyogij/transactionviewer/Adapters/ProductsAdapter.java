@@ -1,4 +1,4 @@
-package com.hyogij.transactionviewer.Adapters;
+package com.hyogij.transactionviewer.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.hyogij.transactionviewer.Datas.Products;
+import com.hyogij.transactionviewer.datas.Products;
 import com.hyogij.transactionviewer.R;
 
 import java.util.ArrayList;

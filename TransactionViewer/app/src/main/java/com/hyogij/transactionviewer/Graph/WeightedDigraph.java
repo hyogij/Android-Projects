@@ -1,4 +1,4 @@
-package com.hyogij.transactionviewer.Graph;
+package com.hyogij.transactionviewer.graph;
 
 /**
  * A class to represent a connected, directed and weighted graph

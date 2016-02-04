@@ -6,8 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.hyogij.transactionviewer.Adapters.TransactionsAdapter;
-import com.hyogij.transactionviewer.Datas.Transaction;
+import com.hyogij.transactionviewer.adapters.TransactionsAdapter;
+import com.hyogij.transactionviewer.datas.Transaction;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;

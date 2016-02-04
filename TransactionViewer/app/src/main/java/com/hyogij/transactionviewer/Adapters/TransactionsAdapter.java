@@ -1,4 +1,4 @@
-package com.hyogij.transactionviewer.Adapters;
+package com.hyogij.transactionviewer.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.hyogij.transactionviewer.Constants;
-import com.hyogij.transactionviewer.Datas.Transaction;
+import com.hyogij.transactionviewer.datas.Transaction;
 import com.hyogij.transactionviewer.R;
 
 import java.text.DecimalFormat;

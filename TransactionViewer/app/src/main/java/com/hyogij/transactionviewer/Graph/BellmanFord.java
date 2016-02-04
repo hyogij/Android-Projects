@@ -1,4 +1,4 @@
-package com.hyogij.transactionviewer.Graph;
+package com.hyogij.transactionviewer.graph;
 
 import android.util.Log;
 

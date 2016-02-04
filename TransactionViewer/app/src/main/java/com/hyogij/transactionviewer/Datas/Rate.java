@@ -1,4 +1,4 @@
-package com.hyogij.transactionviewer.Datas;
+package com.hyogij.transactionviewer.datas;
 
 /**
  * A class for Rate data.
