@@ -1,4 +1,4 @@
-package com.hyogij.jsonclient.Activities;
+package com.hyogij.jsonclient.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,10 +6,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.ImageView;
 
-import com.hyogij.jsonclient.Const.Constants;
-import com.hyogij.jsonclient.ImageLoaderUtils.ImageLoader;
+import com.hyogij.jsonclient.Constants;
+import com.hyogij.jsonclient.loader.ImageLoader;
 import com.hyogij.jsonclient.R;
-import com.hyogij.jsonclient.StringUtils.Utils;
+import com.hyogij.jsonclient.helper.StringUtils;
 
 /**
  * Created by hyogij on 2015. 12. 13..
@@ -31,7 +31,7 @@ public class PictureViewActivity extends Activity {
 
         String id = intent.getStringExtra(Constants.TAG_ID);
         // Change an activity name
-        setTitle(Utils.getActvityTitle(getString(R.string.picture_view_activity), Constants
+        setTitle(StringUtils.getActvityTitle(getString(R.string.picture_view_activity), Constants
                 .TAG_ID, id));
 
         imageLoader = new ImageLoader(getApplicationContext());

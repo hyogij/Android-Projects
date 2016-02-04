@@ -1,4 +1,4 @@
-package com.hyogij.jsonclient.JsonDatas;
+package com.hyogij.jsonclient.data;
 
 /**
  * Created by hyogij on 15. 12. 14..

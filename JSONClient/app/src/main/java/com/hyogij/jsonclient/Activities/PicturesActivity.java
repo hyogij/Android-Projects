@@ -1,4 +1,4 @@
-package com.hyogij.jsonclient.Activities;
+package com.hyogij.jsonclient.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -15,12 +15,12 @@ import android.widget.ListView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.hyogij.jsonclient.Adapters.PictureAdapter;
-import com.hyogij.jsonclient.Const.Constants;
-import com.hyogij.jsonclient.JsonDatas.Picture;
-import com.hyogij.jsonclient.JsonRequestUtils.JsonRequestHelper;
+import com.hyogij.jsonclient.adapters.PictureAdapter;
+import com.hyogij.jsonclient.Constants;
+import com.hyogij.jsonclient.data.Picture;
+import com.hyogij.jsonclient.helper.JsonRequestHelper;
 import com.hyogij.jsonclient.R;
-import com.hyogij.jsonclient.StringUtils.Utils;
+import com.hyogij.jsonclient.helper.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -55,7 +55,7 @@ public class PicturesActivity extends Activity {
         url.append(albumId);
 
         // Change an activity name
-        setTitle(Utils.getActvityTitle(getString(R.string.pictures_activity), Constants
+        setTitle(StringUtils.getActvityTitle(getString(R.string.pictures_activity), Constants
                 .TAG_ALBUMID, albumId));
 
         // Search text in the listview

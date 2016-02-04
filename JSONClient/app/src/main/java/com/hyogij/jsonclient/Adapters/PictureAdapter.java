@@ -1,4 +1,4 @@
-package com.hyogij.jsonclient.Adapters;
+package com.hyogij.jsonclient.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,8 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.hyogij.jsonclient.ImageLoaderUtils.ImageLoader;
-import com.hyogij.jsonclient.JsonDatas.Picture;
+import com.hyogij.jsonclient.loader.ImageLoader;
+import com.hyogij.jsonclient.data.Picture;
 import com.hyogij.jsonclient.R;
 
 import java.util.ArrayList;

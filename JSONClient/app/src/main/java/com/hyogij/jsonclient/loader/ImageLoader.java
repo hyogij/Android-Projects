@@ -1,4 +1,4 @@
-package com.hyogij.jsonclient.ImageLoaderUtils;
+package com.hyogij.jsonclient.loader;
 
 import android.content.Context;
 import android.graphics.Bitmap;

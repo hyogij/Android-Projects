@@ -1,4 +1,4 @@
-package com.hyogij.jsonclient.Const;
+package com.hyogij.jsonclient;
 
 /**
  * Created by hyogij on 15. 12. 15..

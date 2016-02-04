@@ -1,4 +1,4 @@
-package com.hyogij.jsonclient.Adapters;
+package com.hyogij.jsonclient.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,10 +9,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.hyogij.jsonclient.Activities.AlbumsActivity;
-import com.hyogij.jsonclient.Const.Constants;
-import com.hyogij.jsonclient.JsonDatas.User;
-import com.hyogij.jsonclient.Activities.PostsActivity;
+import com.hyogij.jsonclient.activities.AlbumsActivity;
+import com.hyogij.jsonclient.Constants;
+import com.hyogij.jsonclient.data.User;
+import com.hyogij.jsonclient.activities.PostsActivity;
 import com.hyogij.jsonclient.R;
 
 import java.util.ArrayList;

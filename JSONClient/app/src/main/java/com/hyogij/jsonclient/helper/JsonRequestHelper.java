@@ -1,4 +1,4 @@
-package com.hyogij.jsonclient.JsonRequestUtils;
+package com.hyogij.jsonclient.helper;
 
 import android.app.ProgressDialog;
 import android.content.Context;

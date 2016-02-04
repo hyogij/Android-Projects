@@ -1,4 +1,4 @@
-package com.hyogij.jsonclient.Activities;
+package com.hyogij.jsonclient.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -12,10 +12,10 @@ import android.widget.ListView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.hyogij.jsonclient.Adapters.UserAdapter;
-import com.hyogij.jsonclient.Const.Constants;
-import com.hyogij.jsonclient.JsonDatas.User;
-import com.hyogij.jsonclient.JsonRequestUtils.JsonRequestHelper;
+import com.hyogij.jsonclient.adapters.UserAdapter;
+import com.hyogij.jsonclient.Constants;
+import com.hyogij.jsonclient.data.User;
+import com.hyogij.jsonclient.helper.JsonRequestHelper;
 import com.hyogij.jsonclient.R;
 
 import java.util.ArrayList;

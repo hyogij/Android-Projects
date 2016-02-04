@@ -1,19 +1,17 @@
-package com.hyogij.jsonclient.JsonDatas;
+package com.hyogij.jsonclient.data;
 
 /**
  * Created by hyogij on 15. 12. 15..
  */
-public class Post {
+public class Album {
     private String userId = null;
     private String id = null;
     private String title = null;
-    private String body = null;
 
-    public Post(String userId, String id, String title, String body) {
+    public Album(String userId, String id, String title) {
         this.userId = userId;
         this.id = id;
         this.title = title;
-        this.body = body;
     }
 
     public String getUserId() {
@@ -40,16 +38,9 @@ public class Post {
         this.title = title;
     }
 
-    public String getBody() {
-        return body;
-    }
-
-    public void setBody(String body) {
-        this.body = body;
-    }
-
     @Override
     public String toString() {
-        return title + ' ' + body;
+        // Ignore other fields
+        return title;
     }
 }
